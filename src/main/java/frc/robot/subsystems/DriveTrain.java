@@ -3,12 +3,11 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
-
-import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
@@ -33,10 +32,10 @@ public class DriveTrain extends SubsystemBase {
   //private static RelativeEncoder m_encoderRB = m_motorRB.getEncoder();
   //private static RelativeEncoder m_encoderRC = m_motorRC.getEncoder();
   //private static RelativeEncoder m_encoderRD = m_motorRD.getEncoder();
-  private static CANCoder m_encoderRA = new CANCoder(Constants.PORT_ENCODER_1);
-  private static CANCoder m_encoderRB = new CANCoder(Constants.PORT_ENCODER_2);
-  private static CANCoder m_encoderRC = new CANCoder(Constants.PORT_ENCODER_3);
-  private static CANCoder m_encoderRD = new CANCoder(Constants.PORT_ENCODER_4);
+  private static CANcoder m_encoderRA = new CANcoder(Constants.PORT_ENCODER_1);
+  private static CANcoder m_encoderRB = new CANcoder(Constants.PORT_ENCODER_2);
+  private static CANcoder m_encoderRC = new CANcoder(Constants.PORT_ENCODER_3);
+  private static CANcoder m_encoderRD = new CANcoder(Constants.PORT_ENCODER_4);
   private static AHRS m_ahrs = new AHRS(SPI.Port.kMXP);
 
   private static double N_D_SPEED = 0.2;
@@ -96,19 +95,19 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public static double getModuleRAPosition() {
-    return m_encoderRA.getAbsolutePosition()/360;
+    return m_encoderRA.getAbsolutePosition().getValueAsDouble()/360;
   }
 
   public static double getModuleRBPosition() {
-    return m_encoderRB.getAbsolutePosition()/360;
+    return m_encoderRB.getAbsolutePosition().getValueAsDouble()/360;
   }
 
   public static double getModuleRCPosition() {
-    return m_encoderRC.getAbsolutePosition()/360;
+    return m_encoderRC.getAbsolutePosition().getValueAsDouble()/360;
   }
 
   public static double getModuleRDPosition() {
-    return m_encoderRD.getAbsolutePosition()/360;
+    return m_encoderRD.getAbsolutePosition().getValueAsDouble()/360;
   }
 
   public static double getModuleDAPosition() {

@@ -9,9 +9,9 @@ import frc.robot.subsystems.DriveTrain;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class swerveControl extends CommandBase {
+public class swerveControl extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private static DriveTrain m_driveTrain;
   private DoubleSupplier m_xbox_LX;
