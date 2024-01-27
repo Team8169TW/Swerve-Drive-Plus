@@ -40,7 +40,7 @@ public final class Constants {
 
     public static final double kWheelDiameterMeters = Units.inchesToMeters(4);
     public static final double kDriveMotorGearRatio = 1.0 / 6.75;
-    public static final double kTurningMotorGearRatio = 1 / (150/7.0);
+    public static final double kTurningMotorGearRatio = 1 / (150 / 7.0);
     public static final double kDriveEncoderRot2Meter = kDriveMotorGearRatio * Math.PI * kWheelDiameterMeters;
     public static final double kTurningEncoderRot2Rad = kTurningMotorGearRatio * 2 * Math.PI;
     public static final double kDriveEncoderRPM2MeterPerSec = kDriveEncoderRot2Meter / 60;
@@ -124,5 +124,51 @@ public final class Constants {
         // Drive base radius (distance from center to furthest module)
         new Translation2d(DriveConstants.kWheelBase / 2, DriveConstants.kTrackWidth / 2).getNorm(),
         new ReplanningConfig());
+  }
+
+  // Intake
+  public static final class IntakeConstants {
+
+    // Intake Motor Ports
+    public static final int kIntakeMotorPort = 10;
+
+    // Intake Motor Rate
+    public static final double kIntakeMotorRate = 0.8;
+  }
+
+  // Shooter
+  public static final class ShooterConstants {
+
+    // Shooter Motor Ports
+    public static final int kTopShooterMotorPort = 12;
+    public static final int kBottomShooterMotorPort = 11;
+
+    // Shooter Motor Ratio
+    public static final double kShooterMotorGearRatio = 8.0 / 7.0;
+
+    // Shooter Motor Speed
+    public static final int kShooterMotorMaxRPM = 10000;
+    public static final int kShooterMotorDefaultRPM = 3600;
+
+    // Shooter Motor PID
+    public static final double kPShooter = 0.1;
+    public static final double kIShooter = 0.0;
+    public static final double kDShooter = 0.0;
+  }
+
+  // Linkage
+  public static final class LinkageConstants {
+
+    // Linkage Motor Ports
+    public static final int kLinkageMotorPort = 9;
+
+    // Linkage Motor PID
+    public static final double kPLinkage = 0.1;
+    public static final double kILinkage = 0.0;
+    public static final double kDLinkage = 0.0;
+
+    // Linkage Motor Position
+    public static final double kUpPosition = 0.0;
+    public static final double kDownPosition = 0.0;
   }
 }
