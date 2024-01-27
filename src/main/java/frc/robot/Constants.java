@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
@@ -35,8 +39,8 @@ public final class Constants {
   public static final class ModuleConstants {
 
     public static final double kWheelDiameterMeters = Units.inchesToMeters(4);
-    public static final double kDriveMotorGearRatio = 1 / 8.14;
-    public static final double kTurningMotorGearRatio = 1 / 12.8;
+    public static final double kDriveMotorGearRatio = 1.0 / 6.75;
+    public static final double kTurningMotorGearRatio = 1 / (150/7.0);
     public static final double kDriveEncoderRot2Meter = kDriveMotorGearRatio * Math.PI * kWheelDiameterMeters;
     public static final double kTurningEncoderRot2Rad = kTurningMotorGearRatio * 2 * Math.PI;
     public static final double kDriveEncoderRPM2MeterPerSec = kDriveEncoderRot2Meter / 60;
@@ -106,7 +110,19 @@ public final class Constants {
 
     public static final double kMaxDriveMotorTemp = 33.0;
 
-    public static final double kMotorMaxOutput = 0.8;
+    public static final double kMotorMaxOutput = 1;
 
+  }
+
+  public static final class AutoConstants {
+    public static final double kAutoDriveMaxSpeedMetersPerSecond = DriveConstants.kPhysicalMaxSpeedMetersPerSecond;
+
+    public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
+        new PIDConstants(5, 0, 0), // Translation constants
+        new PIDConstants(3, 0, 0), // Rotation constants
+        kAutoDriveMaxSpeedMetersPerSecond,
+        // Drive base radius (distance from center to furthest module)
+        new Translation2d(DriveConstants.kWheelBase / 2, DriveConstants.kTrackWidth / 2).getNorm(),
+        new ReplanningConfig());
   }
 }

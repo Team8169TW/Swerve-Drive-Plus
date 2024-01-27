@@ -57,9 +57,9 @@ public class SwerveNormal extends Command {
     double turningSpeed = turningSpdFunction.get();
 
     // Apply deadband to protect motors
-    xSpeed = Math.abs(xSpeed) > IOConstants.kDeadband ? xSpeed/(1-IOConstants.kDeadband) : 0.0;
-    ySpeed = Math.abs(ySpeed) > IOConstants.kDeadband ? ySpeed/(1-IOConstants.kDeadband) : 0.0;
-    turningSpeed = Math.abs(turningSpeed) > IOConstants.kDeadband ? turningSpeed/(1-IOConstants.kDeadband) : 0.0;
+    xSpeed = Math.abs(xSpeed) > IOConstants.kDeadband ? xSpeed / (1 - IOConstants.kDeadband) : 0.0;
+    ySpeed = Math.abs(ySpeed) > IOConstants.kDeadband ? ySpeed / (1 - IOConstants.kDeadband) : 0.0;
+    turningSpeed = Math.abs(turningSpeed) > IOConstants.kDeadband ? turningSpeed / (1 - IOConstants.kDeadband) : 0.0;
 
     // Apply slew rate to joystick input to make robot input smoother and mulitply
     // by max speed
@@ -71,11 +71,8 @@ public class SwerveNormal extends Command {
     ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed,
         Rotation2d.fromDegrees(swerveSubsystem.getRobotDegrees()));
 
-    // Create module states using array
-    SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
-
-    // Set the module state
-    swerveSubsystem.setModuleStates(moduleStates);
+    // Set chassis speeds
+    swerveSubsystem.setChassisSpeeds(chassisSpeeds);
   }
 
   // Stop all module motor movement when command ends

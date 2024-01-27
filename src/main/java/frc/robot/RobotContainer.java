@@ -4,9 +4,15 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.IOConstants;
 import frc.robot.commands.Swerve.SwerveNormal;
@@ -29,10 +35,18 @@ public class RobotContainer {
   // Create swerve subsystem
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
+  // Create auto chooser
+  private final SendableChooser<Command> autoChooser;
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+
+    configureNamedCommands();
+    autoChooser = AutoBuilder.buildAutoChooser(); // Default auto will be `Commands.none()`
+    SmartDashboard.putData("Auto Mode", autoChooser);
+
     // Configure the button bindings
     configureButtonBindings();
     setDefaultCommand();
@@ -47,6 +61,21 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
+  }
+
+  private void setDefaultCommand() {
+    swerveSubsystem.setDefaultCommand(new SwerveNormal(swerveSubsystem,
+        () -> driverController.getLeftX(), // X-Axis
+        () -> -driverController.getLeftY(), // Y-Axis
+        () -> -driverController.getRightX() // R-Axis
+    ));
+  }
+
+  private void configureNamedCommands() {
+    NamedCommands.registerCommand("marker1", Commands.print("Passed marker 1"));
+    NamedCommands.registerCommand("marker2", Commands.print("Passed marker 2"));
+    NamedCommands.registerCommand("print hello", Commands.print("hello"));
   }
 
   /**
@@ -55,15 +84,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return null;
-  }
-
-  private void setDefaultCommand() {
-    swerveSubsystem.setDefaultCommand(new SwerveNormal(swerveSubsystem,
-        () -> driverController.getLeftX(), // X-Axis
-        () -> -driverController.getLeftY(), // Y-Axis
-        () -> -driverController.getRightX() // R-Axis
-    )); // Flick offset button, should be toggle!
+    return autoChooser.getSelected();
   }
 }

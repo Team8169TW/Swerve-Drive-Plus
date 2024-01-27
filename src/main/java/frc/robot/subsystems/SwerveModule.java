@@ -71,7 +71,7 @@ public class SwerveModule extends SubsystemBase {
 
     // Set reverse state of drive and turning motor
     driveMotor.setInverted(false);
-    turningMotor.setInverted(false);
+    turningMotor.setInverted(true);
 
     // Set drive and turning motor encoder values
     driveEncoder = driveMotor.getEncoder();
@@ -208,7 +208,7 @@ public class SwerveModule extends SubsystemBase {
 
     simTurnReal.setAngle(absoluteEncoder.getAbsolutePosition().getValue() * 360); // +90
     simDirectionReal
-        .setAngle(state.speedMetersPerSecond / DriveConstants.kPhysicalMaxSpeedMetersPerSecond > 0 ? 0 : 180);
+        .setAngle(getDriveVelocity() > 0 ? 0 : 180);
     simDirectionReal.setLength(Math.abs(getDriveVelocity() / DriveConstants.kPhysicalMaxSpeedMetersPerSecond));
 
     SmartDashboard.putString("Swerve[" + moduleName + "] state", state.toString());
