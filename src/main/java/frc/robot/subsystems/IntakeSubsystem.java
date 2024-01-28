@@ -34,7 +34,7 @@ public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
     intakeMotor.setInverted(false);
-    intakeMotor.setIdleMode(IdleMode.kBrake);
+    intakeMotor.setIdleMode(IdleMode.kCoast);
 
     colorSensor.configureProximitySensor(ProximitySensorResolution.kProxRes11bit,
         ProximitySensorMeasurementRate.kProxRate6ms);
