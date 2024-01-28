@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -24,6 +25,7 @@ public class LinkageSubsystem extends SubsystemBase {
   /** Creates a new LinkageSubsystem. */
   public LinkageSubsystem() {
     linkageMotor.setInverted(false);
+    linkageMotor.setIdleMode(IdleMode.kBrake);
 
     // Set PID values for the Spark Max PID
     linkagePIDController.setP(LinkageConstants.kPLinkage);

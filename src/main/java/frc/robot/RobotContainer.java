@@ -15,7 +15,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.IOConstants;
+import frc.robot.commands.Intake.IntakeAuto;
+import frc.robot.commands.Intake.IntakeNormal;
 import frc.robot.commands.Swerve.SwerveNormal;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
 /**
@@ -32,8 +35,9 @@ public class RobotContainer {
   private static CommandXboxController driverController = new CommandXboxController(IOConstants.kControllerDriver);
   private static CommandXboxController operatorController = new CommandXboxController(IOConstants.kControllerOperator);
 
-  // Create swerve subsystem
+  // Create subsystem
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
   // Create auto chooser
   private final SendableChooser<Command> autoChooser;
@@ -61,7 +65,9 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
+    operatorController.b().whileTrue(new IntakeNormal(intakeSubsystem, false));
+    operatorController.a().whileTrue(new IntakeNormal(intakeSubsystem, true));
+    operatorController.y().onTrue(new IntakeAuto(intakeSubsystem));
   }
 
   private void setDefaultCommand() {

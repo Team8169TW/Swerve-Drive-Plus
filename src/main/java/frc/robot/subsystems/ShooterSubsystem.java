@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -26,9 +27,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
   /** Creates a new ShooterSubsystem. */
   public ShooterSubsystem() {
-    topShooterMotor.setInverted(true);
-
     bottomShooterMotor.follow(topShooterMotor);
+
+    topShooterMotor.setInverted(true);
+    topShooterMotor.setIdleMode(IdleMode.kCoast);
 
     shooterEncoder.setVelocityConversionFactor(ShooterConstants.kShooterMotorGearRatio);
 

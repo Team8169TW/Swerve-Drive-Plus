@@ -132,7 +132,10 @@ public final class Constants {
     public static final int kIntakeMotorPort = 10;
 
     // Intake Motor Rate
-    public static final double kIntakeMotorRate = 0.8;
+    public static final double kIntakeMotorRate = 0.4;
+
+    // Intake Sensor Gate Value
+    public static final int kIntakeGateValue = 300;
   }
 
   // Shooter

@@ -7,14 +7,12 @@ package frc.robot.commands.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class IntakeNormal extends Command {
-private IntakeSubsystem intakeSubsystem;
-private boolean rev;
+public class IntakeAuto extends Command {
+  private IntakeSubsystem intakeSubsystem;
 
-  /** Creates a new IntakeNormal. */
-  public IntakeNormal(IntakeSubsystem intakeSubsystem, boolean rev) {
+  /** Creates a new IntakeAuto. */
+  public IntakeAuto(IntakeSubsystem intakeSubsystem) {
     this.intakeSubsystem = intakeSubsystem;
-    this.rev = rev;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intakeSubsystem);
@@ -23,15 +21,16 @@ private boolean rev;
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(rev)
-      intakeSubsystem.runRev();
-    else
-      intakeSubsystem.runFwd();
+    intakeSubsystem.runFwd();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    // if(intakeSubsystem.isPass()){
+    //   intakeSubsystem.stop();
+    // }
+  }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -42,6 +41,6 @@ private boolean rev;
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return intakeSubsystem.isPass();
   }
 }
