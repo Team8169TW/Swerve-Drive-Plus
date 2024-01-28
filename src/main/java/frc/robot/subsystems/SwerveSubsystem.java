@@ -8,7 +8,6 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
@@ -29,28 +28,24 @@ public class SwerveSubsystem extends SubsystemBase {
       DriveConstants.kFrontLeftDriveMotorPort,
       DriveConstants.kFrontLeftTurningMotorPort,
       DriveConstants.kFrontLeftDriveAbsoluteEncoderPort,
-      DriveConstants.kFrontLeftDriveAbsoluteEncoderOffsetDeg,
       "Front Left");
 
   private final SwerveModule frontRight = new SwerveModule(
       DriveConstants.kFrontRightDriveMotorPort,
       DriveConstants.kFrontRightTurningMotorPort,
       DriveConstants.kFrontRightDriveAbsoluteEncoderPort,
-      DriveConstants.kFrontRightDriveAbsoluteEncoderOffsetDeg,
       "Front Right");
 
   private final SwerveModule backLeft = new SwerveModule(
       DriveConstants.kBackLeftDriveMotorPort,
       DriveConstants.kBackLeftTurningMotorPort,
       DriveConstants.kBackLeftDriveAbsoluteEncoderPort,
-      DriveConstants.kBackLeftDriveAbsoluteEncoderOffsetDeg,
       "Back Left");
 
   private final SwerveModule backRight = new SwerveModule(
       DriveConstants.kBackRightDriveMotorPort,
       DriveConstants.kBackRightTurningMotorPort,
       DriveConstants.kBackRightDriveAbsoluteEncoderPort,
-      DriveConstants.kBackRightDriveAbsoluteEncoderOffsetDeg,
       "Back Right");
 
   // The end of this madness ^_^

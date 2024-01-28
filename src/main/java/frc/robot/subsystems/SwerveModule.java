@@ -38,9 +38,6 @@ public class SwerveModule extends SubsystemBase {
   // private final DutyCycleEncoder absoluteEncoder;
   private final CANcoder absoluteEncoder;
 
-  // private final boolean absoluteEncoderReversed;
-  private final double absoluteEncoderOffsetRad;
-
   private String moduleName;
 
   // Special UI variables for swerve simulation
@@ -55,11 +52,8 @@ public class SwerveModule extends SubsystemBase {
       int driveMotorId,
       int turningMotorId,
       int absoluteEncoderId,
-      double absoluteEncoderOffset,
       String name) {
-
-    // Set offsets for absolute encoder in RADIANS!!!!!
-    absoluteEncoderOffsetRad = absoluteEncoderOffset;
+        
     moduleName = name;
 
     // Create absolute encoder

@@ -11,7 +11,6 @@ import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.units.Unit;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -91,10 +90,10 @@ public final class Constants {
     // -------> ABE <-------- //
 
     // Need to update values for our specific magnetic fields
-    public static final double kFrontLeftDriveAbsoluteEncoderOffsetDeg = -0.411865;
-    public static final double kBackLeftDriveAbsoluteEncoderOffsetDeg = -0.185059;
-    public static final double kFrontRightDriveAbsoluteEncoderOffsetDeg = -0.801758;
-    public static final double kBackRightDriveAbsoluteEncoderOffsetDeg = -0.241943;
+    // public static final double kFrontLeftDriveAbsoluteEncoderOffsetDeg = -0.411865;
+    // public static final double kBackLeftDriveAbsoluteEncoderOffsetDeg = -0.185059;
+    // public static final double kFrontRightDriveAbsoluteEncoderOffsetDeg = -0.801758;
+    // public static final double kBackRightDriveAbsoluteEncoderOffsetDeg = -0.241943;
 
     public static final double kPhysicalMaxSpeedMetersPerSecond = 5;
     public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
