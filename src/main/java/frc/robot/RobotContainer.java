@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.RunMode;
 import frc.robot.commands.Intake.IntakeAuto;
+import frc.robot.commands.Intake.IntakeFromHead;
 import frc.robot.commands.Intake.IntakeNormal;
 import frc.robot.commands.Linkage.LinkageAuto;
 import frc.robot.commands.Linkage.LinkageNormal;
@@ -79,6 +80,8 @@ public class RobotContainer {
     operatorController.a().whileTrue(new IntakeNormal(intakeSubsystem, RunMode.kRev));
     // Intake auto
     operatorController.y().onTrue(new IntakeAuto(intakeSubsystem));
+    // Intake from head
+    operatorController.x().onTrue(new IntakeFromHead(intakeSubsystem, shooterSubsystem));
 
     // Linkage fine
     operatorController.pov(90).whileTrue(new LinkageNormal(linkageSubsystem, RunMode.kDown));

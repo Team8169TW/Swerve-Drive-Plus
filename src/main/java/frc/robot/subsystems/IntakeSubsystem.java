@@ -35,6 +35,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public IntakeSubsystem() {
     intakeMotor.setInverted(false);
     intakeMotor.setIdleMode(IdleMode.kCoast);
+    intakeMotor.setSmartCurrentLimit(60);
 
     colorSensor.configureProximitySensor(ProximitySensorResolution.kProxRes11bit,
         ProximitySensorMeasurementRate.kProxRate6ms);
@@ -42,11 +43,13 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void runFwd() {
-    intakeMotor.set(IntakeConstants.kIntakeMotorRate);
+    intakeMotor.setIdleMode(IdleMode.kCoast);
+    intakeMotor.set(IntakeConstants.kIntakeMotorRateFwd);
   }
 
   public void runRev() {
-    intakeMotor.set(-IntakeConstants.kIntakeMotorRate);
+    intakeMotor.setIdleMode(IdleMode.kBrake);
+    intakeMotor.set(-IntakeConstants.kIntakeMotorRateRev);
   }
 
   public void stop() {
@@ -89,5 +92,6 @@ public class IntakeSubsystem extends SubsystemBase {
     SmartDashboard.putBoolean("isPass", isPass());
     SmartDashboard.putBoolean("isConnected", colorSensor.isConnected());
 
+    SmartDashboard.putNumber("Intake C", intakeMotor.getOutputCurrent());
   }
 }
