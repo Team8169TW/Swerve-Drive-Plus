@@ -55,8 +55,8 @@ public class SwerveNormal extends Command {
     double turningSpeed = turningSpdFunction.get();
 
     // Apply deadband to protect motors
-    xSpeed = Math.abs(xSpeed) > IOConstants.kDeadband ? xSpeed / (1 - IOConstants.kDeadband) : 0.0;
-    ySpeed = Math.abs(ySpeed) > IOConstants.kDeadband ? ySpeed / (1 - IOConstants.kDeadband) : 0.0;
+    xSpeed =IOConstants.deadbandHandler(xSpeed, IOConstants.kDeadband);
+    ySpeed = IOConstants.deadbandHandler(ySpeed, IOConstants.kDeadband);
     turningSpeed = Math.abs(turningSpeed) > IOConstants.kDeadband ? turningSpeed / (1 - IOConstants.kDeadband) : 0.0;
 
     // Apply slew rate to joystick input to make robot input smoother and mulitply

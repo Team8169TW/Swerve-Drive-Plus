@@ -32,6 +32,16 @@ public final class Constants {
 
     public static final int kControllerDriver = 1;
     public static final int kControllerOperator = 0;
+
+    public static double deadbandHandler(double value, double deadband) {
+      if (Math.abs(value) < deadband) {
+        return 0;
+      } else if (value > 0) {
+        return (value - IOConstants.kDeadband) / (1 - IOConstants.kDeadband);
+      } else {
+        return (value + IOConstants.kDeadband) / (1 - IOConstants.kDeadband);
+      }
+    }
   }
 
   // Swerve modules
