@@ -65,38 +65,42 @@ public final class Constants {
 
     // Need to update to correct values, I dont remember the value we set last meet
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
-        new Translation2d(-kWheelBase / 2, kTrackWidth / 2), // FL
-        new Translation2d(kWheelBase / 2, kTrackWidth / 2), // FR
-        new Translation2d(-kWheelBase / 2, -kTrackWidth / 2), // BL
-        new Translation2d(kWheelBase / 2, -kTrackWidth / 2)); // BR
+        new Translation2d(kWheelBase / 2, kTrackWidth / 2), // FL
+        new Translation2d(kWheelBase / 2, -kTrackWidth / 2), // FR
+        new Translation2d(-kWheelBase / 2, kTrackWidth / 2), // BL
+        new Translation2d(-kWheelBase / 2, -kTrackWidth / 2)); // BR
 
     // Driving Motor Ports
-    public static final int kFrontLeftDriveMotorPort = 1; // Front Left
-    public static final int kFrontRightDriveMotorPort = 2; // Front Right
-    public static final int kBackLeftDriveMotorPort = 3; // Back Left
-    public static final int kBackRightDriveMotorPort = 4; // Back Right
+    public static final int kFrontLeftDriveMotorPort = 4; // Front Left
+    public static final int kFrontRightDriveMotorPort = 3; // Front Right
+    public static final int kBackLeftDriveMotorPort = 2; // Back Left
+    public static final int kBackRightDriveMotorPort = 1; // Back Right
 
     // Turning Motor Ports
-    public static final int kFrontLeftTurningMotorPort = 5; // Front Left
-    public static final int kFrontRightTurningMotorPort = 6;// Front Right
-    public static final int kBackLeftTurningMotorPort = 7; // Back Left
-    public static final int kBackRightTurningMotorPort = 8; // Back Right
+    public static final int kFrontLeftTurningMotorPort = 8; // Front Left
+    public static final int kFrontRightTurningMotorPort = 7;// Front Right
+    public static final int kBackLeftTurningMotorPort = 6; // Back Left
+    public static final int kBackRightTurningMotorPort = 5; // Back Right
 
     // -------> ABE <-------- //
-    public static final int kFrontLeftDriveAbsoluteEncoderPort = 1;
-    public static final int kFrontRightDriveAbsoluteEncoderPort = 2;
-    public static final int kBackLeftDriveAbsoluteEncoderPort = 3;
-    public static final int kBackRightDriveAbsoluteEncoderPort = 4;
+    public static final int kFrontLeftDriveAbsoluteEncoderPort = 4;
+    public static final int kFrontRightDriveAbsoluteEncoderPort = 3;
+    public static final int kBackLeftDriveAbsoluteEncoderPort = 2;
+    public static final int kBackRightDriveAbsoluteEncoderPort = 1;
     // -------> ABE <-------- //
 
     // Need to update values for our specific magnetic fields
-    // public static final double kFrontLeftDriveAbsoluteEncoderOffsetDeg = -0.411865;
-    // public static final double kBackLeftDriveAbsoluteEncoderOffsetDeg = -0.185059;
-    // public static final double kFrontRightDriveAbsoluteEncoderOffsetDeg = -0.801758;
-    // public static final double kBackRightDriveAbsoluteEncoderOffsetDeg = -0.241943;
+    // public static final double kFrontLeftDriveAbsoluteEncoderOffsetDeg =
+    // -0.411865;
+    // public static final double kBackLeftDriveAbsoluteEncoderOffsetDeg =
+    // -0.185059;
+    // public static final double kFrontRightDriveAbsoluteEncoderOffsetDeg =
+    // -0.801758;
+    // public static final double kBackRightDriveAbsoluteEncoderOffsetDeg =
+    // -0.241943;
 
     public static final double kPhysicalMaxSpeedMetersPerSecond = 5;
-    public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
+    public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * Math.PI;
 
     public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond;
     public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond;
@@ -162,7 +166,7 @@ public final class Constants {
     public static final double kRamprate = 50000;
 
     // Intake Motor Rate
-    public static final double kShooterMotorRateRev = 0.2;
+    public static final double kShooterMotorRateRev = 0.15;
   }
 
   // Linkage
@@ -172,16 +176,27 @@ public final class Constants {
     public static final int kLinkageMotorPort = 9;
 
     // Linkage Motor PID
-    public static final double kPLinkage = 6;
-    public static final double kILinkage = 0.0;
-    public static final double kDLinkage = 0.0;
+    public static final double kP = 0.02;
+    public static final double kI = 0.00005;
+    public static final double kD = 0.005;
+    public static final double kIz = 20;
+    public static final double kFF = 0;
+    public static final double kMaxOutput = 0.4;
+    public static final double kMinOutput = -0.8;
 
     // Linkage Motor Position
-    public static final double kUpPosition = 0.0;
-    public static final double kDownPosition = 0.12;
+    // public static final double kUpPosition = 0.0;
+    // public static final double kDownPosition = 0.12;
 
     // Linkage Motor Rate
-    public static final double kLinkageMotorRateFine = 0.3;
+    public static final double kLinkageMotorRateFine = 0.4;
+
+    // Linkage Motor Ratio
+    public static final double kLinkageMotorGearRatio = 125.0 / 16 * 48;
+
+    // Linkage Motor Limit
+    public static final double kUpLimit = 51.00;
+    public static final double kDownLimit = 110.0;
   }
 
   public enum RunMode {

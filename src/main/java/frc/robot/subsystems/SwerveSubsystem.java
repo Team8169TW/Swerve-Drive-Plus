@@ -191,8 +191,8 @@ public class SwerveSubsystem extends SubsystemBase {
 
   // Return robot position caculated by odometer
   public Pose2d getPose() {
-    // return odometer.getPoseMeters();
-    return odometer.getPoseMeters().rotateBy(Rotation2d.fromDegrees(-90));
+    return odometer.getPoseMeters();
+    // return odometer.getPoseMeters().rotateBy(Rotation2d.fromDegrees(-90));
     // return odometer.getPoseMeters().transformBy(new Transform2d(0, 0, Rotation2d.fromDegrees(-90)));
   }
 
@@ -220,8 +220,8 @@ public class SwerveSubsystem extends SubsystemBase {
      */
     // SmartDashboard.putNumber("Yaw", gyro.getYaw());
     // SmartDashboard.putNumber("Angle", gyro.getAngle());
-    return (Rotation2d.fromDegrees(gyro.getYaw()));
-    // return Rotation2d.fromDegrees(getRobotDegrees()-180);
+    // return (Rotation2d.fromDegrees(gyro.getYaw()));
+    return Rotation2d.fromDegrees(getRobotDegrees()-180);
   }
 
   // Returns an angle from 0 to 360 that is continuous, meaning it loops

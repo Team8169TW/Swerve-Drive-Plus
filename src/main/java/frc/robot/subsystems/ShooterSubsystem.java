@@ -29,7 +29,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private final SparkPIDController shooterPIDControllerB = bottomShooterMotor.getPIDController();
 
   private SlewRateLimiter normalRateLimiter = new SlewRateLimiter(ShooterConstants.kRamprate);
-  private SlewRateLimiter stopRateLimiter = new SlewRateLimiter(ShooterConstants.kRamprate / 4);
+  private SlewRateLimiter stopRateLimiter = new SlewRateLimiter(ShooterConstants.kRamprate / 8);
 
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput, maxRPM;
   public double setPoint;

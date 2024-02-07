@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.RunMode;
@@ -79,9 +80,10 @@ public class RobotContainer {
     operatorController.b().whileTrue(new IntakeNormal(intakeSubsystem, RunMode.kFwd));
     operatorController.a().whileTrue(new IntakeNormal(intakeSubsystem, RunMode.kRev));
     // Intake auto
-    operatorController.y().onTrue(new IntakeAuto(intakeSubsystem));
+    operatorController.y().toggleOnTrue(new IntakeAuto(intakeSubsystem));
     // Intake from head
-    operatorController.x().onTrue(new IntakeFromHead(intakeSubsystem, shooterSubsystem));
+    // operatorController.x().onTrue(new IntakeFromHead(intakeSubsystem, shooterSubsystem));
+    operatorController.x().toggleOnTrue(new IntakeFromHead(intakeSubsystem, shooterSubsystem));
 
     // Linkage fine
     operatorController.pov(90).whileTrue(new LinkageNormal(linkageSubsystem, RunMode.kDown));
@@ -92,12 +94,15 @@ public class RobotContainer {
 
     // Shooter
     operatorController.start().onTrue(new ShooterNormal(shooterSubsystem, operatorControllerNC::getBackButton));
+
+    // Disable
+    operatorController.leftBumper().onTrue(new InstantCommand(()->{System.out.println(0/0);}));
   }
 
   private void setDefaultCommand() {
     swerveSubsystem.setDefaultCommand(new SwerveNormal(swerveSubsystem,
-        () -> driverController.getLeftX(), // X-Axis
-        () -> -driverController.getLeftY(), // Y-Axis
+        () -> -driverController.getLeftY(), // X-Axis
+        () -> -driverController.getLeftX(), // Y-Axis
         () -> -driverController.getRightX() // R-Axis
     ));
   }

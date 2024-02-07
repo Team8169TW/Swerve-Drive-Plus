@@ -53,7 +53,7 @@ public class SwerveModule extends SubsystemBase {
       int turningMotorId,
       int absoluteEncoderId,
       String name) {
-        
+
     moduleName = name;
 
     // Create absolute encoder
@@ -64,7 +64,7 @@ public class SwerveModule extends SubsystemBase {
     turningMotor = new CANSparkMax(turningMotorId, MotorType.kBrushless);
 
     // Set reverse state of drive and turning motor
-    driveMotor.setInverted(false);
+    driveMotor.setInverted(true);
     turningMotor.setInverted(true);
 
     // Set drive and turning motor encoder values
