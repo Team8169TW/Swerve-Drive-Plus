@@ -186,13 +186,13 @@ public final class Constants {
     public static final int kLinkageMotorPort = 9;
 
     // Linkage Motor PID
-    public static final double kP = 0.02;
-    public static final double kI = 0.00005;
-    public static final double kD = 0.005;
-    public static final double kIz = 20;
+    public static final double kP = 0.012; // 0.02
+    public static final double kI = 0.000005; // 0.00005
+    public static final double kD = 0.0; // 0.005
+    public static final double kIz = 0; // 20
     public static final double kFF = 0;
     public static final double kMaxOutput = 0.4;
-    public static final double kMinOutput = -0.8;
+    public static final double kMinOutput = -0.5;
 
     // Linkage Motor Position
     // public static final double kUpPosition = 0.0;
@@ -202,11 +202,11 @@ public final class Constants {
     public static final double kLinkageMotorRateFine = 0.4;
 
     // Linkage Motor Ratio
-    public static final double kLinkageMotorGearRatio = 125.0 / 16 * 48;
+    public static final double kLinkageMotorGearRatio = 125.0 / 14 * 46;
 
     // Linkage Motor Limit
-    public static final double kUpLimit = 51.00;
-    public static final double kDownLimit = 110.0;
+    public static final double kUpLimit = 115.00;
+    public static final double kDownLimit = 182.50;
   }
 
   public enum RunMode {

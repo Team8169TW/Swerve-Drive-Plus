@@ -33,7 +33,7 @@ public class LinkageSubsystem extends SubsystemBase {
 
   /** Creates a new LinkageSubsystem. */
   public LinkageSubsystem() {
-    linkageMotor.setInverted(false);
+    linkageMotor.setInverted(true);
     linkageMotor.setIdleMode(IdleMode.kBrake);
 
     linkageEncoder.setPosition(linkageAbsEncoder.getPosition());

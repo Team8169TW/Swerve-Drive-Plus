@@ -73,6 +73,8 @@ public class ShooterSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("D Gain", kD);
     // SmartDashboard.putNumber("I Zone", kIz);
     // SmartDashboard.putNumber("Feed Forward", kFF);
+
+    SmartDashboard.putNumber("Shooter Offset", 0);
   }
 
   @Override
@@ -96,6 +98,8 @@ public class ShooterSubsystem extends SubsystemBase {
     // if((iz != kIz)) { shooterPIDController.setIZone(iz); kIz = iz; }
     // if((ff != kFF)) { shooterPIDController.setFF(ff); kFF = ff; }
 
+    double offset = SmartDashboard.getNumber("Shooter Offset", 0);
+
     if (setPoint >= 0) {
       // Calculate and set new reference RPM
       double reference_setpoint;
@@ -105,12 +109,13 @@ public class ShooterSubsystem extends SubsystemBase {
         normalRateLimiter.reset(reference_setpoint);
         // topShooterMotor.set(0);
         // bottomShooterMotor.set(0);
+        offset = 0;
       } else {
         reference_setpoint = normalRateLimiter.calculate(setPoint);
         stopRateLimiter.reset(reference_setpoint);
       }
-      shooterPIDControllerT.setReference(reference_setpoint, ControlType.kVelocity);
-      shooterPIDControllerB.setReference(reference_setpoint, ControlType.kVelocity);
+      shooterPIDControllerT.setReference(reference_setpoint + offset, ControlType.kVelocity);
+      shooterPIDControllerB.setReference(reference_setpoint - offset, ControlType.kVelocity);
     }
   }
 
