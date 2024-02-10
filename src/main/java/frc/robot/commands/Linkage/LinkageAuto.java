@@ -24,10 +24,12 @@ public class LinkageAuto extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (mode == RunMode.kUp)
-      linkageSubsystem.up();
-    if (mode == RunMode.kDown)
-      linkageSubsystem.down();
+    if (mode == RunMode.kIdle)
+      linkageSubsystem.setIdle();
+    if (mode == RunMode.kShoot)
+      linkageSubsystem.setShooter();
+    if (mode == RunMode.kIntake)
+      linkageSubsystem.setIntaker();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -36,13 +38,11 @@ public class LinkageAuto extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    linkageSubsystem.stop();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return linkageSubsystem.isDone();
+    return true;
   }
 }

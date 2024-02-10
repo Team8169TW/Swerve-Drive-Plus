@@ -7,26 +7,31 @@ package frc.robot.commands.Intake;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LinkageSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class IntakeFromHead extends Command {
   IntakeSubsystem intakeSubsystem;
   ShooterSubsystem shooterSubsystem;
+  LinkageSubsystem linkageSubsystem;
   Timer timer = new Timer();
 
   /** Creates a new IntakeFromHead. */
-  public IntakeFromHead(IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem) {
+  public IntakeFromHead(IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem, LinkageSubsystem linkageSubsystem) {
     this.intakeSubsystem = intakeSubsystem;
     this.shooterSubsystem = shooterSubsystem;
+    this.linkageSubsystem = linkageSubsystem;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intakeSubsystem);
     addRequirements(shooterSubsystem);
+    addRequirements(linkageSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    linkageSubsystem.setShooter();
     shooterSubsystem.runRev();
     timer.reset();
   }

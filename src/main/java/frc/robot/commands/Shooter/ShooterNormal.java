@@ -9,24 +9,29 @@ import java.util.function.BooleanSupplier;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.subsystems.LinkageSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterNormal extends Command {
   ShooterSubsystem shooterSubsystem;
   BooleanSupplier onStop;
+  LinkageSubsystem linkageSubsystem;
 
   /** Creates a new ShooterNormal. */
-  public ShooterNormal(ShooterSubsystem shooterSubsystem, BooleanSupplier onStop) {
+  public ShooterNormal(ShooterSubsystem shooterSubsystem, BooleanSupplier onStop, LinkageSubsystem linkageSubsystem) {
     this.shooterSubsystem = shooterSubsystem;
     this.onStop = onStop;
+    this.linkageSubsystem = linkageSubsystem;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooterSubsystem);
+    addRequirements(linkageSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    linkageSubsystem.setShooter();
     SmartDashboard.putNumber("Shooter RPM", SmartDashboard.getNumber("Shooter RPM", ShooterConstants.kShooterMotorDefaultRPM));
   }
 

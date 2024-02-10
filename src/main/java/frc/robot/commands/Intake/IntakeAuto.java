@@ -6,21 +6,26 @@ package frc.robot.commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LinkageSubsystem;
 
 public class IntakeAuto extends Command {
   private IntakeSubsystem intakeSubsystem;
+  private LinkageSubsystem linkageSubsystem;
 
   /** Creates a new IntakeAuto. */
-  public IntakeAuto(IntakeSubsystem intakeSubsystem) {
+  public IntakeAuto(IntakeSubsystem intakeSubsystem, LinkageSubsystem linkageSubsystem) {
     this.intakeSubsystem = intakeSubsystem;
+    this.linkageSubsystem = linkageSubsystem;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intakeSubsystem);
+    addRequirements(linkageSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    linkageSubsystem.setIntaker();
     intakeSubsystem.runFwd();
   }
 

@@ -194,19 +194,20 @@ public final class Constants {
     public static final double kMaxOutput = 0.4;
     public static final double kMinOutput = -0.5;
 
-    // Linkage Motor Position
-    // public static final double kUpPosition = 0.0;
-    // public static final double kDownPosition = 0.12;
-
     // Linkage Motor Rate
     public static final double kLinkageMotorRateFine = 0.4;
 
     // Linkage Motor Ratio
     public static final double kLinkageMotorGearRatio = 125.0 / 14 * 46;
 
+    // Linkage Motor Position
+    public static final double kShootPosition = 115.00;
+    public static final double kIntakePosition = 182.50;
+    public static final double kIdlePosition = (kShootPosition + kIntakePosition) / 2;
+
     // Linkage Motor Limit
-    public static final double kUpLimit = 115.00;
-    public static final double kDownLimit = 182.50;
+    public static final double kUpLimit = kShootPosition - 1;
+    public static final double kDownLimit = kIntakePosition + 1;
   }
 
   public enum RunMode {
@@ -215,5 +216,8 @@ public final class Constants {
     kDown,
     kFwd,
     kRev,
+    kIdle,
+    kShoot,
+    kIntake,
   }
 }

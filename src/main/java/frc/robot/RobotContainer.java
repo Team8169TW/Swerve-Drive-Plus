@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.RunMode;
@@ -80,23 +79,23 @@ public class RobotContainer {
     operatorController.b().whileTrue(new IntakeNormal(intakeSubsystem, RunMode.kFwd));
     operatorController.a().whileTrue(new IntakeNormal(intakeSubsystem, RunMode.kRev));
     // Intake auto
-    operatorController.y().toggleOnTrue(new IntakeAuto(intakeSubsystem));
+    operatorController.y().toggleOnTrue(new IntakeAuto(intakeSubsystem, linkageSubsystem));
     // Intake from head
     // operatorController.x().onTrue(new IntakeFromHead(intakeSubsystem, shooterSubsystem));
-    operatorController.x().toggleOnTrue(new IntakeFromHead(intakeSubsystem, shooterSubsystem));
+    operatorController.x().toggleOnTrue(new IntakeFromHead(intakeSubsystem, shooterSubsystem, linkageSubsystem));
 
     // Linkage fine
     operatorController.pov(90).whileTrue(new LinkageNormal(linkageSubsystem, RunMode.kDown));
     operatorController.pov(270).whileTrue(new LinkageNormal(linkageSubsystem, RunMode.kUp));
     // Linkage auto
-    operatorController.pov(0).onTrue(new LinkageAuto(linkageSubsystem, RunMode.kDown));
-    operatorController.pov(180).onTrue(new LinkageAuto(linkageSubsystem, RunMode.kUp));
+    operatorController.pov(180).onTrue(new LinkageAuto(linkageSubsystem, RunMode.kIntake));
+    operatorController.pov(0).onTrue(new LinkageAuto(linkageSubsystem, RunMode.kShoot));
 
     // Shooter
-    operatorController.start().onTrue(new ShooterNormal(shooterSubsystem, operatorControllerNC::getBackButton));
+    operatorController.start().onTrue(new ShooterNormal(shooterSubsystem, operatorControllerNC::getBackButton, linkageSubsystem));
 
     // Disable
-    operatorController.leftBumper().onTrue(new InstantCommand(()->{System.out.println(0/0);}));
+    // operatorController.leftBumper().onTrue(new InstantCommand(()->{System.out.println(0/0);}));
   }
 
   private void setDefaultCommand() {
@@ -105,6 +104,8 @@ public class RobotContainer {
         () -> -driverController.getLeftX(), // Y-Axis
         () -> -driverController.getRightX() // R-Axis
     ));
+
+    linkageSubsystem.setDefaultCommand(new LinkageAuto(linkageSubsystem, RunMode.kIdle));
   }
 
   private void configureNamedCommands() {

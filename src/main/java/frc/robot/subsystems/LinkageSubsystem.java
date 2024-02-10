@@ -17,17 +17,12 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LinkageConstants;
-import frc.robot.Constants.RunMode;
 
 public class LinkageSubsystem extends SubsystemBase {
   private final CANSparkMax linkageMotor = new CANSparkMax(LinkageConstants.kLinkageMotorPort, MotorType.kBrushless);
   private final RelativeEncoder linkageEncoder = linkageMotor.getEncoder();
   private final SparkAbsoluteEncoder linkageAbsEncoder = linkageMotor.getAbsoluteEncoder(Type.kDutyCycle);
   private final SparkPIDController linkagePIDController = linkageMotor.getPIDController();
-
-  private static RunMode state;
-
-  private final double deadband = 0.01;
 
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
 
@@ -41,8 +36,8 @@ public class LinkageSubsystem extends SubsystemBase {
     linkageMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
     linkageMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
 
-    linkageMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, (float) LinkageConstants.kDownLimit+1);
-    linkageMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, (float) LinkageConstants.kUpLimit-1);
+    linkageMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, (float) LinkageConstants.kDownLimit);
+    linkageMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, (float) LinkageConstants.kUpLimit);
 
     kP = LinkageConstants.kP;
     kI = LinkageConstants.kI;
@@ -109,32 +104,31 @@ public class LinkageSubsystem extends SubsystemBase {
     }
   }
 
-  public void up() {
-    state = RunMode.kUp;
-    linkagePIDController.setReference(LinkageConstants.kUpLimit, ControlType.kPosition);
+  public void setIdle(){
+    linkagePIDController.setReference(LinkageConstants.kIdlePosition, ControlType.kPosition);
   }
 
-  public void down() {
-    state = RunMode.kDown;
-    linkagePIDController.setReference(LinkageConstants.kDownLimit, ControlType.kPosition);
+  public void setShooter(){
+    linkagePIDController.setReference(LinkageConstants.kShootPosition, ControlType.kPosition);
+  }
+
+  public void setIntaker(){
+    linkagePIDController.setReference(LinkageConstants.kIntakePosition, ControlType.kPosition);
   }
 
   public void upFine() {
-    state = RunMode.kUp;
     linkageMotor.set(-LinkageConstants.kLinkageMotorRateFine);
   }
 
   public void downFine() {
-    state = RunMode.kDown;
     linkageMotor.set(LinkageConstants.kLinkageMotorRateFine);
   }
 
   public void stop() {
-    state = RunMode.kStop;
     linkageMotor.set(0);
   }
 
-  public boolean isDone() {
-    return state == RunMode.kStop;
+  public void hold(){
+    linkagePIDController.setReference(getAbsPosition(), ControlType.kPosition);
   }
 }

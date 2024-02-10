@@ -39,6 +39,7 @@ public class LinkageNormal extends Command {
   @Override
   public void end(boolean interrupted) {
     linkageSubsystem.stop();
+    linkageSubsystem.hold();
   }
 
   // Returns true when the command should end.
