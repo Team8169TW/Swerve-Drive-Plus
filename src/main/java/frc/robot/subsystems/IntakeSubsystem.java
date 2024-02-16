@@ -35,7 +35,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public IntakeSubsystem() {
     intakeMotor.setInverted(false);
     intakeMotor.setIdleMode(IdleMode.kCoast);
-    intakeMotor.setSmartCurrentLimit(70);
+    intakeMotor.setSmartCurrentLimit(80);
 
     colorSensor.configureProximitySensor(ProximitySensorResolution.kProxRes11bit,
         ProximitySensorMeasurementRate.kProxRate6ms);
@@ -87,11 +87,10 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("IR", getIR());
-    SmartDashboard.putNumber("Proximity", getProximity());
-    SmartDashboard.putBoolean("isPass", isPass());
-    SmartDashboard.putBoolean("isConnected", colorSensor.isConnected());
-
+    SmartDashboard.putNumber("Intake Proximity", getProximity());
+    SmartDashboard.putBoolean("Intake isPass", isPass());
+    SmartDashboard.putBoolean("Intake isConnected", colorSensor.isConnected());
+    SmartDashboard.putBoolean("Intake isBlock", intakeMotor.getOutputCurrent() > 70);
     SmartDashboard.putNumber("Intake C", intakeMotor.getOutputCurrent());
   }
 }

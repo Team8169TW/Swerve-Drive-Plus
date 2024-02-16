@@ -47,13 +47,13 @@ public class LinkageSubsystem extends SubsystemBase {
     kMaxOutput = LinkageConstants.kMaxOutput;
     kMinOutput = LinkageConstants.kMinOutput;
 
-    SmartDashboard.putNumber("P Gain", kP);
-    SmartDashboard.putNumber("I Gain", kI);
-    SmartDashboard.putNumber("D Gain", kD);
-    SmartDashboard.putNumber("I Zone", kIz);
-    SmartDashboard.putNumber("Feed Forward", kFF);
-    SmartDashboard.putNumber("Max Output", kMaxOutput);
-    SmartDashboard.putNumber("Min Output", kMinOutput);
+    SmartDashboard.putNumber("Linkage P Gain", kP);
+    SmartDashboard.putNumber("Linkage I Gain", kI);
+    SmartDashboard.putNumber("Linkage D Gain", kD);
+    SmartDashboard.putNumber("Linkage I Zone", kIz);
+    SmartDashboard.putNumber("Linkage Feed Forward", kFF);
+    SmartDashboard.putNumber("Linkage Max Output", kMaxOutput);
+    SmartDashboard.putNumber("Linkage Min Output", kMinOutput);
 
     // Set PID values for the Spark Max PID
     linkagePIDController.setP(kP);
@@ -84,13 +84,13 @@ public class LinkageSubsystem extends SubsystemBase {
     // }
 
     // read PID coefficients from SmartDashboard
-    double p = SmartDashboard.getNumber("P Gain", 0);
-    double i = SmartDashboard.getNumber("I Gain", 0);
-    double d = SmartDashboard.getNumber("D Gain", 0);
-    double iz = SmartDashboard.getNumber("I Zone", 0);
-    double ff = SmartDashboard.getNumber("Feed Forward", 0);
-    double max = SmartDashboard.getNumber("Max Output", 0);
-    double min = SmartDashboard.getNumber("Min Output", 0);
+    double p = SmartDashboard.getNumber("Linkage P Gain", 0);
+    double i = SmartDashboard.getNumber("Linkage I Gain", 0);
+    double d = SmartDashboard.getNumber("Linkage D Gain", 0);
+    double iz = SmartDashboard.getNumber("Linkage I Zone", 0);
+    double ff = SmartDashboard.getNumber("Linkage Feed Forward", 0);
+    double max = SmartDashboard.getNumber("Linkage Max Output", 0);
+    double min = SmartDashboard.getNumber("Linkage Min Output", 0);
 
     // if PID coefficients on SmartDashboard have changed, write new values to controller
     if((p != kP)) { linkagePIDController.setP(p); kP = p; }
