@@ -47,6 +47,7 @@ public class ShooterNormal extends Command {
   @Override
   public void end(boolean interrupted) {
     shooterSubsystem.setSpeed(0);
+    linkageSubsystem.setIdle();
   }
 
   // Returns true when the command should end.

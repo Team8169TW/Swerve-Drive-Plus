@@ -41,6 +41,7 @@ public class IntakeAuto extends Command {
   @Override
   public void end(boolean interrupted) {
     intakeSubsystem.stop();
+    linkageSubsystem.setIdle();
   }
 
   // Returns true when the command should end.

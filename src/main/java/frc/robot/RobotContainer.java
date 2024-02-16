@@ -81,15 +81,15 @@ public class RobotContainer {
     // Intake auto
     operatorController.y().toggleOnTrue(new IntakeAuto(intakeSubsystem, linkageSubsystem));
     // Intake from head
-    // operatorController.x().onTrue(new IntakeFromHead(intakeSubsystem, shooterSubsystem));
     operatorController.x().toggleOnTrue(new IntakeFromHead(intakeSubsystem, shooterSubsystem, linkageSubsystem));
 
     // Linkage fine
-    operatorController.pov(90).whileTrue(new LinkageNormal(linkageSubsystem, RunMode.kDown));
-    operatorController.pov(270).whileTrue(new LinkageNormal(linkageSubsystem, RunMode.kUp));
+    driverController.leftBumper().whileTrue(new LinkageNormal(linkageSubsystem, RunMode.kUp));
+    driverController.rightBumper().whileTrue(new LinkageNormal(linkageSubsystem, RunMode.kDown));
     // Linkage auto
-    operatorController.pov(180).onTrue(new LinkageAuto(linkageSubsystem, RunMode.kIntake));
-    operatorController.pov(0).onTrue(new LinkageAuto(linkageSubsystem, RunMode.kShoot));
+    driverController.pov(0).onTrue(new LinkageAuto(linkageSubsystem, RunMode.kShoot));
+    driverController.pov(90).onTrue(new LinkageAuto(linkageSubsystem, RunMode.kIdle));
+    driverController.pov(180).onTrue(new LinkageAuto(linkageSubsystem, RunMode.kIntake));
 
     // Shooter
     operatorController.start().onTrue(new ShooterNormal(shooterSubsystem, operatorControllerNC::getBackButton, linkageSubsystem));
@@ -105,7 +105,7 @@ public class RobotContainer {
         () -> -driverController.getRightX() // R-Axis
     ));
 
-    linkageSubsystem.setDefaultCommand(new LinkageAuto(linkageSubsystem, RunMode.kIdle));
+    // linkageSubsystem.setDefaultCommand(new LinkageAuto(linkageSubsystem, RunMode.kIdle));
   }
 
   private void configureNamedCommands() {

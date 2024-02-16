@@ -52,6 +52,7 @@ public class IntakeFromHead extends Command {
     timer.stop();
     shooterSubsystem.stop();
     intakeSubsystem.stop();
+    linkageSubsystem.setIdle();
   }
 
   // Returns true when the command should end.

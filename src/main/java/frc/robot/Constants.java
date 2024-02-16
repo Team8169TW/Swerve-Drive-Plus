@@ -186,9 +186,9 @@ public final class Constants {
     public static final int kLinkageMotorPort = 9;
 
     // Linkage Motor PID
-    public static final double kP = 0.012; // 0.02
-    public static final double kI = 0.000005; // 0.00005
-    public static final double kD = 0.0; // 0.005
+    public static final double kP = 0.02; // 0.02
+    public static final double kI = 0.00001; // 0.00005
+    public static final double kD = 0.00001; // 0.005
     public static final double kIz = 0; // 20
     public static final double kFF = 0;
     public static final double kMaxOutput = 0.4;
@@ -203,7 +203,7 @@ public final class Constants {
     // Linkage Motor Position
     public static final double kShootPosition = 115.00;
     public static final double kIntakePosition = 182.50;
-    public static final double kIdlePosition = (kShootPosition + kIntakePosition) / 2;
+    public static final double kIdlePosition = 155.00;
 
     // Linkage Motor Limit
     public static final double kUpLimit = kShootPosition - 1;
