@@ -28,11 +28,11 @@ public class ShooterSubsystem extends SubsystemBase {
   private final SparkPIDController shooterPIDControllerT = topShooterMotor.getPIDController();
   private final SparkPIDController shooterPIDControllerB = bottomShooterMotor.getPIDController();
 
-  private SlewRateLimiter normalRateLimiter = new SlewRateLimiter(ShooterConstants.kRamprate);
-  private SlewRateLimiter stopRateLimiter = new SlewRateLimiter(ShooterConstants.kRamprate / 8);
+  private SlewRateLimiter topRateLimiter = new SlewRateLimiter(ShooterConstants.kRamprate);
+  private SlewRateLimiter bottomRateLimiter = new SlewRateLimiter(ShooterConstants.kRamprate);
 
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput, maxRPM;
-  public double setPoint;
+  public double setPointTop, setPointBottom;
 
   /** Creates a new ShooterSubsystem. */
   public ShooterSubsystem() {
@@ -73,8 +73,6 @@ public class ShooterSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("D Gain", kD);
     // SmartDashboard.putNumber("I Zone", kIz);
     // SmartDashboard.putNumber("Feed Forward", kFF);
-
-    SmartDashboard.putNumber("Shooter Offset", 0);
   }
 
   @Override
@@ -98,49 +96,43 @@ public class ShooterSubsystem extends SubsystemBase {
     // if((iz != kIz)) { shooterPIDController.setIZone(iz); kIz = iz; }
     // if((ff != kFF)) { shooterPIDController.setFF(ff); kFF = ff; }
 
-    double offset = SmartDashboard.getNumber("Shooter Offset", 0);
-
-    if (setPoint >= 0) {
+    if (setPointTop > 0) {
       // Calculate and set new reference RPM
       double reference_setpoint;
-      if (setPoint == 0) {
-        // when we hit stop, stop immediately. (safety!)
-        reference_setpoint = stopRateLimiter.calculate(setPoint);
-        normalRateLimiter.reset(reference_setpoint);
-        // topShooterMotor.set(0);
-        // bottomShooterMotor.set(0);
-        offset = 0;
-      } else {
-        reference_setpoint = normalRateLimiter.calculate(setPoint);
-        stopRateLimiter.reset(reference_setpoint);
-      }
-      shooterPIDControllerT.setReference(reference_setpoint + offset, ControlType.kVelocity);
-      shooterPIDControllerB.setReference(reference_setpoint - offset, ControlType.kVelocity);
+      reference_setpoint = topRateLimiter.calculate(setPointTop);
+      shooterPIDControllerT.setReference(reference_setpoint, ControlType.kVelocity);
+    }
+
+    if (setPointBottom > 0) {
+      // Calculate and set new reference RPM
+      double reference_setpoint;
+      reference_setpoint = bottomRateLimiter.calculate(setPointBottom);
+      shooterPIDControllerB.setReference(reference_setpoint, ControlType.kVelocity);
     }
   }
 
-  public void setSpeed(int speed) {
-    if (speed > ShooterConstants.kShooterMotorMaxRPM)
-      speed = ShooterConstants.kShooterMotorMaxRPM;
-
-    setPoint = speed;
-    // shooterPIDController.setReference(speed, ControlType.kVelocity);
-    // topShooterMotor.set((double)3600/ShooterConstants.kShooterMotorMaxRPM);
-
-    // shooterPIDControllerT.setReference(ShooterConstants.kShooterMotorDefaultRPM,
-    // ControlType.kVelocity);
-    // shooterPIDControllerB.setReference(ShooterConstants.kShooterMotorDefaultRPM,
-    // ControlType.kVelocity);
+  public void setSpeed(int topSpeed, int bottomSpeed) {
+    if (topSpeed > ShooterConstants.kShooterMotorMaxRPM)
+      topSpeed = ShooterConstants.kShooterMotorMaxRPM;
+    setPointTop = topSpeed;
+    if (bottomSpeed > ShooterConstants.kShooterMotorMaxRPM)
+      bottomSpeed = ShooterConstants.kShooterMotorMaxRPM;
+    setPointBottom = bottomSpeed;
   }
 
   public void runRev() {
     topShooterMotor.set(-ShooterConstants.kShooterMotorRateRev);
     bottomShooterMotor.set(-ShooterConstants.kShooterMotorRateRev);
-    setPoint = -1;
+    setPointTop = -1;
+    setPointBottom = -1;
   }
 
   public void stop() {
     topShooterMotor.set(0);
     bottomShooterMotor.set(0);
+    setPointTop = 0;
+    setPointBottom = 0;
+    topRateLimiter.reset(0);
+    bottomRateLimiter.reset(0);
   }
 }

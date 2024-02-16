@@ -177,6 +177,21 @@ public final class Constants {
 
     // Intake Motor Rate
     public static final double kShooterMotorRateRev = 0.15;
+
+    public enum SpeedSet {
+      kSpeak(3600, 4400),
+      kAmp(600, 800),
+      kStage(875, 3795),
+      kManual(3600, 3600);
+
+      public final int topSpeed;
+      public final int bottomSpeed;
+
+      private SpeedSet(int topSpeed, int bottomSpeed) {
+          this.topSpeed = topSpeed;
+          this.bottomSpeed = bottomSpeed;
+      }
+    }
   }
 
   // Linkage

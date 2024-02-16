@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.RunMode;
+import frc.robot.Constants.ShooterConstants.SpeedSet;
 import frc.robot.commands.Intake.IntakeAuto;
 import frc.robot.commands.Intake.IntakeFromHead;
 import frc.robot.commands.Intake.IntakeNormal;
@@ -92,7 +93,11 @@ public class RobotContainer {
     driverController.pov(180).onTrue(new LinkageAuto(linkageSubsystem, RunMode.kIntake));
 
     // Shooter
-    operatorController.start().onTrue(new ShooterNormal(shooterSubsystem, operatorControllerNC::getBackButton, linkageSubsystem));
+    // operatorController.start().onTrue(new ShooterNormal(shooterSubsystem, operatorControllerNC::getBackButton, linkageSubsystem));
+    operatorController.pov(0).onTrue(new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kSpeak));
+    operatorController.pov(90).onTrue(new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kAmp));
+    operatorController.pov(180).onTrue(new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kStage));
+    operatorController.pov(270).onTrue(new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kManual));
 
     // Disable
     // operatorController.leftBumper().onTrue(new InstantCommand(()->{System.out.println(0/0);}));

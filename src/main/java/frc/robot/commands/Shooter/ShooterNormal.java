@@ -5,48 +5,57 @@
 package frc.robot.commands.Shooter;
 
 import java.util.function.BooleanSupplier;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.ShooterConstants.SpeedSet;
 import frc.robot.subsystems.LinkageSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterNormal extends Command {
   ShooterSubsystem shooterSubsystem;
   BooleanSupplier onStop;
+  SpeedSet speed;
   LinkageSubsystem linkageSubsystem;
 
   /** Creates a new ShooterNormal. */
-  public ShooterNormal(ShooterSubsystem shooterSubsystem, BooleanSupplier onStop, LinkageSubsystem linkageSubsystem) {
+  public ShooterNormal(ShooterSubsystem shooterSubsystem, LinkageSubsystem linkageSubsystem, BooleanSupplier onStop, SpeedSet speed) {
     this.shooterSubsystem = shooterSubsystem;
     this.onStop = onStop;
+    this.speed = speed;
     this.linkageSubsystem = linkageSubsystem;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooterSubsystem);
     addRequirements(linkageSubsystem);
+
+    SmartDashboard.putNumber("Shooter Set RPM T",
+        SmartDashboard.getNumber("Shooter Set RPM T", ShooterConstants.kShooterMotorDefaultRPM));
+    SmartDashboard.putNumber("Shooter Set RPM B",
+        SmartDashboard.getNumber("Shooter Set RPM B", ShooterConstants.kShooterMotorDefaultRPM));
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     linkageSubsystem.setShooter();
-    SmartDashboard.putNumber("Shooter RPM", SmartDashboard.getNumber("Shooter RPM", ShooterConstants.kShooterMotorDefaultRPM));
+    shooterSubsystem.setSpeed(speed.topSpeed, speed.bottomSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    int rpm = (int)SmartDashboard.getNumber("Shooter RPM", ShooterConstants.kShooterMotorDefaultRPM);
-    // System.out.println(rpm);
-    shooterSubsystem.setSpeed(rpm);
+    if (speed == SpeedSet.kManual) {
+      int rpmT = (int) SmartDashboard.getNumber("Shooter Set RPM T", ShooterConstants.kShooterMotorDefaultRPM);
+      int rpmB = (int) SmartDashboard.getNumber("Shooter Set RPM B", ShooterConstants.kShooterMotorDefaultRPM);
+      shooterSubsystem.setSpeed(rpmT, rpmB);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooterSubsystem.setSpeed(0);
+    shooterSubsystem.stop();
     linkageSubsystem.setIdle();
   }
 
