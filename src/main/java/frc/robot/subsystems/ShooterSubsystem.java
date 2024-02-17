@@ -103,14 +103,14 @@ public class ShooterSubsystem extends SubsystemBase {
     if((iz != kIZone)) { shooterPIDControllerT.setIZone(iz); shooterPIDControllerB.setIZone(iz); kIZone = iz; }
     if((ff != kFF)) { shooterPIDControllerT.setFF(ff); shooterPIDControllerB.setFF(ff); kFF = ff; }
 
-    if (setPointTop > 0) {
+    if (setPointTop >= 0) {
       // Calculate and set new reference RPM
       double reference_setpoint;
       reference_setpoint = topRateLimiter.calculate(setPointTop);
       shooterPIDControllerT.setReference(reference_setpoint, ControlType.kVelocity);
     }
 
-    if (setPointBottom > 0) {
+    if (setPointBottom >= 0) {
       // Calculate and set new reference RPM
       double reference_setpoint;
       reference_setpoint = bottomRateLimiter.calculate(setPointBottom);

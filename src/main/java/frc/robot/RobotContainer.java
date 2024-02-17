@@ -114,8 +114,9 @@ public class RobotContainer {
   }
 
   private void configureNamedCommands() {
-    NamedCommands.registerCommand("start shoot speak", new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kSpeak));
-    NamedCommands.registerCommand("intake", new IntakeNormal(intakeSubsystem, RunMode.kFwd));
+    NamedCommands.registerCommand("ShooterNormalSpeak", new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kSpeak));
+    NamedCommands.registerCommand("IntakeNormalFwd", new IntakeNormal(intakeSubsystem, RunMode.kFwd));
+    NamedCommands.registerCommand("IntakeAuto", new IntakeAuto(intakeSubsystem, linkageSubsystem));
   }
 
   /**

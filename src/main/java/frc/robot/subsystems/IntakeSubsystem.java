@@ -43,7 +43,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void runFwd() {
-    intakeMotor.setIdleMode(IdleMode.kCoast);
+    intakeMotor.setIdleMode(IdleMode.kBrake);
     intakeMotor.set(IntakeConstants.kIntakeMotorRateFwd);
   }
 
