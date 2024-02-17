@@ -114,9 +114,8 @@ public class RobotContainer {
   }
 
   private void configureNamedCommands() {
-    NamedCommands.registerCommand("marker1", Commands.print("Passed marker 1"));
-    NamedCommands.registerCommand("marker2", Commands.print("Passed marker 2"));
-    NamedCommands.registerCommand("print hello", Commands.print("hello"));
+    NamedCommands.registerCommand("start shoot speak", new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kSpeak));
+    NamedCommands.registerCommand("intake", new IntakeNormal(intakeSubsystem, RunMode.kFwd));
   }
 
   /**

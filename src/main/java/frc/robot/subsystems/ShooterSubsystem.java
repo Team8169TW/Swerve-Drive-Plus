@@ -31,7 +31,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private SlewRateLimiter topRateLimiter = new SlewRateLimiter(ShooterConstants.kRamprate);
   private SlewRateLimiter bottomRateLimiter = new SlewRateLimiter(ShooterConstants.kRamprate);
 
-  public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput, maxRPM;
+  public double kP, kI, kD, kIZone, kFF, maxRPM;
   public double setPointTop, setPointBottom;
 
   /** Creates a new ShooterSubsystem. */
@@ -49,30 +49,35 @@ public class ShooterSubsystem extends SubsystemBase {
 
     // bottomShooterMotor.follow(topShooterMotor);
 
+    kP = ShooterConstants.kP;
+    kI = ShooterConstants.kI;
+    kD = ShooterConstants.kD;
+    kIZone = ShooterConstants.kIZone;
+    kFF = ShooterConstants.kFF;
+
+    SmartDashboard.putNumber("Shooter P Gain", kP);
+    SmartDashboard.putNumber("Shooter I Gain", kI);
+    SmartDashboard.putNumber("Shooter D Gain", kD);
+    SmartDashboard.putNumber("Shooter I Zone", kIZone);
+    SmartDashboard.putNumber("Shooter Feed Forward", kFF);
+
     // Set PID values for the Spark Max PID
-    shooterPIDControllerT.setP(ShooterConstants.kP);
-    shooterPIDControllerT.setI(ShooterConstants.kI);
-    shooterPIDControllerT.setD(ShooterConstants.kD);
-    shooterPIDControllerT.setIZone(ShooterConstants.kIZone);
-    shooterPIDControllerT.setFF(ShooterConstants.kFF);
+    shooterPIDControllerT.setP(kP);
+    shooterPIDControllerT.setI(kI);
+    shooterPIDControllerT.setD(kD);
+    shooterPIDControllerT.setIZone(kIZone);
+    shooterPIDControllerT.setFF(kFF);
     shooterPIDControllerT.setOutputRange(0, 1);
     topShooterMotor.burnFlash();
 
     // Set PID values for the Spark Max PID
-    shooterPIDControllerB.setP(ShooterConstants.kP);
-    shooterPIDControllerB.setI(ShooterConstants.kI);
-    shooterPIDControllerB.setD(ShooterConstants.kD);
-    shooterPIDControllerB.setIZone(ShooterConstants.kIZone);
-    shooterPIDControllerB.setFF(ShooterConstants.kFF);
+    shooterPIDControllerB.setP(kP);
+    shooterPIDControllerB.setI(kI);
+    shooterPIDControllerB.setD(kD);
+    shooterPIDControllerB.setIZone(kIZone);
+    shooterPIDControllerB.setFF(kFF);
     shooterPIDControllerB.setOutputRange(0, 1);
     bottomShooterMotor.burnFlash();
-
-    // // display PID coefficients on SmartDashboard
-    // SmartDashboard.putNumber("P Gain", kP);
-    // SmartDashboard.putNumber("I Gain", kI);
-    // SmartDashboard.putNumber("D Gain", kD);
-    // SmartDashboard.putNumber("I Zone", kIz);
-    // SmartDashboard.putNumber("Feed Forward", kFF);
   }
 
   @Override
@@ -81,20 +86,22 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Shooter RPM T", shooterEncoderT.getVelocity());
     SmartDashboard.putNumber("Shooter RPM B", shooterEncoderB.getVelocity());
 
-    // // read PID coefficients from SmartDashboard
-    // double p = SmartDashboard.getNumber("P Gain", 0);
-    // double i = SmartDashboard.getNumber("I Gain", 0);
-    // double d = SmartDashboard.getNumber("D Gain", 0);
-    // double iz = SmartDashboard.getNumber("I Zone", 0);
-    // double ff = SmartDashboard.getNumber("Feed Forward", 0);
+    SmartDashboard.putBoolean("Shooter OK T", Math.abs(shooterEncoderT.getVelocity() - setPointTop) < 50);
+    SmartDashboard.putBoolean("Shooter OK B", Math.abs(shooterEncoderB.getVelocity() - setPointBottom) < 50);
 
-    // // if PID coefficients on SmartDashboard have changed, write new values to
-    // controller
-    // if((p != kP)) { shooterPIDController.setP(p); kP = p; }
-    // if((i != kI)) { shooterPIDController.setI(i); kI = i; }
-    // if((d != kD)) { shooterPIDController.setD(d); kD = d; }
-    // if((iz != kIz)) { shooterPIDController.setIZone(iz); kIz = iz; }
-    // if((ff != kFF)) { shooterPIDController.setFF(ff); kFF = ff; }
+    // // read PID coefficients from SmartDashboard
+    double p = SmartDashboard.getNumber("Shooter P Gain", 0);
+    double i = SmartDashboard.getNumber("Shooter I Gain", 0);
+    double d = SmartDashboard.getNumber("Shooter D Gain", 0);
+    double iz = SmartDashboard.getNumber("Shooter I Zone", 0);
+    double ff = SmartDashboard.getNumber("Shooter Feed Forward", 0);
+
+    // // if PID coefficients on SmartDashboard have changed, write new values to controller
+    if((p != kP)) { shooterPIDControllerT.setP(p); shooterPIDControllerB.setP(p); kP = p; }
+    if((i != kI)) { shooterPIDControllerT.setI(i); shooterPIDControllerB.setI(i); kI = i; }
+    if((d != kD)) { shooterPIDControllerT.setD(d); shooterPIDControllerB.setD(d); kD = d; }
+    if((iz != kIZone)) { shooterPIDControllerT.setIZone(iz); shooterPIDControllerB.setIZone(iz); kIZone = iz; }
+    if((ff != kFF)) { shooterPIDControllerT.setFF(ff); shooterPIDControllerB.setFF(ff); kFF = ff; }
 
     if (setPointTop > 0) {
       // Calculate and set new reference RPM
