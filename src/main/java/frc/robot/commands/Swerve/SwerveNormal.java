@@ -65,7 +65,7 @@ public class SwerveNormal extends Command {
 
     turningAngle *= 8;
 
-    swerveSubsystem.setChassisOutput(xSpeed, ySpeed, turningAngle, false);
+    swerveSubsystem.setChassisOutput(xSpeed, ySpeed, turningAngle);
   }
 
   // Stop all module motor movement when command ends

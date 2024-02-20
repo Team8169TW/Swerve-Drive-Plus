@@ -22,6 +22,7 @@ import frc.robot.commands.Intake.IntakeNormal;
 import frc.robot.commands.Linkage.LinkageAuto;
 import frc.robot.commands.Linkage.LinkageNormal;
 import frc.robot.commands.Shooter.ShooterNormal;
+import frc.robot.commands.Swerve.SwerveAutoGo;
 import frc.robot.commands.Swerve.SwerveLockHeading;
 import frc.robot.commands.Swerve.SwerveNormal;
 import frc.robot.commands.Swerve.SwerveXMode;
@@ -108,6 +109,8 @@ public class RobotContainer {
         () -> -driverController.getLeftX(), // Y-Axis
         () -> -driverController.getRightX() // R-Axis
     ));
+    // Swerve Auto Go
+    driverController.y().toggleOnTrue(new SwerveAutoGo(swerveSubsystem));
 
     // Disable
     // operatorController.leftBumper().onTrue(new InstantCommand(()->{System.out.println(0/0);}));

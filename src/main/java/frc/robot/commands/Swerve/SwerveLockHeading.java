@@ -71,7 +71,7 @@ public class SwerveLockHeading extends Command {
       swerveSubsystem.setChassisOutput(xSpeed, ySpeed, turningAngle, true);
     } else {
       turningAngle *= 10;
-      swerveSubsystem.setChassisOutput(xSpeed, ySpeed, turningAngle, false);
+      swerveSubsystem.setChassisOutput(xSpeed, ySpeed, turningAngle);
     }
 
   }

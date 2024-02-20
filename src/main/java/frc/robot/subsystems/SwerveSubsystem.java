@@ -190,7 +190,16 @@ public class SwerveSubsystem extends SubsystemBase {
     setModuleStates(moduleStates);
   }
 
+  public void setChassisOutput(double xSpeed, double ySpeed, double turningAngle) {
+    setChassisOutput(xSpeed, ySpeed, turningAngle, false, false);
+  }
+
   public void setChassisOutput(double xSpeed, double ySpeed, double turningAngle, boolean forAuto) {
+    setChassisOutput(xSpeed, ySpeed, turningAngle, forAuto, false);
+  }
+
+  public void setChassisOutput(double xSpeed, double ySpeed, double turningAngle, boolean forAuto,
+      boolean robotRelative) {
     xSpeed *= DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
     ySpeed *= DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
 
@@ -203,17 +212,21 @@ public class SwerveSubsystem extends SubsystemBase {
       turningSpeed = thetaControllerN.calculate(getHeading(), heading);
     }
 
-    // double turningSpeed = thetaController.calculate(getHeading(), heading);
-    SmartDashboard.putNumber("", heading);
-
     turningSpeed = Math.abs(turningSpeed) > 0.05 ? turningSpeed : 0.0;
     turningSpeed *= -DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
     turningSpeed = MathUtil.clamp(turningSpeed, -DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond,
         DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond);
 
     // Create chassis speeds
-    ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed,
-        Rotation2d.fromDegrees(getRobotDegrees()));
+    ChassisSpeeds chassisSpeeds;
+
+    if (robotRelative) {
+      chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(xSpeed, ySpeed, turningSpeed,
+          Rotation2d.fromDegrees(getRobotDegrees()));
+    } else {
+      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed,
+          Rotation2d.fromDegrees(getRobotDegrees()));
+    }
 
     // Set chassis speeds
     setChassisSpeeds(chassisSpeeds);
