@@ -96,11 +96,16 @@ public class RobotContainer {
     driverController.pov(180).onTrue(new LinkageAuto(linkageSubsystem, RunMode.kIntake));
 
     // Shooter
-    // operatorController.start().onTrue(new ShooterNormal(shooterSubsystem, operatorControllerNC::getBackButton, linkageSubsystem));
-    operatorController.pov(0).onTrue(new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kSpeak));
-    operatorController.pov(90).onTrue(new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kAmp));
-    operatorController.pov(180).onTrue(new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kStage));
-    operatorController.pov(270).onTrue(new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kManual));
+    // operatorController.start().onTrue(new ShooterNormal(shooterSubsystem,
+    // operatorControllerNC::getBackButton, linkageSubsystem));
+    operatorController.pov(0).onTrue(
+        new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kSpeak));
+    operatorController.pov(90).onTrue(
+        new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kAmp));
+    operatorController.pov(180).onTrue(
+        new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kStage));
+    operatorController.pov(270).onTrue(
+        new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kManual));
 
     // Swerve Brake
     driverController.x().whileTrue(new SwerveXMode(swerveSubsystem));
@@ -113,9 +118,12 @@ public class RobotContainer {
     // Swerve Auto Go
     // driverController.y().toggleOnTrue(new SwerveAutoGo(swerveSubsystem));
     driverController.y().onTrue(new AutoIntakeNote(swerveSubsystem, intakeSubsystem, linkageSubsystem));
+    driverController.axisGreaterThan(3, 0.1)
+        .whileTrue(new SwerveAutoGo(swerveSubsystem, driverController::getRightTriggerAxis));
 
     // Disable
-    // operatorController.leftBumper().onTrue(new InstantCommand(()->{System.out.println(0/0);}));
+    // operatorController.leftBumper().onTrue(new
+    // InstantCommand(()->{System.out.println(0/0);}));
   }
 
   private void setDefaultCommand() {
@@ -125,11 +133,13 @@ public class RobotContainer {
         () -> -driverController.getRightX() // R-Axis
     ));
 
-    // linkageSubsystem.setDefaultCommand(new LinkageAuto(linkageSubsystem, RunMode.kIdle));
+    // linkageSubsystem.setDefaultCommand(new LinkageAuto(linkageSubsystem,
+    // RunMode.kIdle));
   }
 
   private void configureNamedCommands() {
-    NamedCommands.registerCommand("ShooterNormalSpeak", new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kSpeak));
+    NamedCommands.registerCommand("ShooterNormalSpeak",
+        new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kSpeak));
     NamedCommands.registerCommand("IntakeNormalFwd", new IntakeNormal(intakeSubsystem, RunMode.kFwd));
     NamedCommands.registerCommand("IntakeAuto", new IntakeAuto(intakeSubsystem, linkageSubsystem));
   }
