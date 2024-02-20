@@ -23,6 +23,7 @@ import frc.robot.commands.Linkage.LinkageAuto;
 import frc.robot.commands.Linkage.LinkageNormal;
 import frc.robot.commands.Shooter.ShooterNormal;
 import frc.robot.commands.Swerve.SwerveNormal;
+import frc.robot.commands.Swerve.SwerveXMode;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LinkageSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -97,6 +98,9 @@ public class RobotContainer {
     operatorController.pov(90).onTrue(new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kAmp));
     operatorController.pov(180).onTrue(new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kStage));
     operatorController.pov(270).onTrue(new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kManual));
+
+    // Swerve Brake
+    driverController.x().whileTrue(new SwerveXMode(swerveSubsystem));
 
     // Disable
     // operatorController.leftBumper().onTrue(new InstantCommand(()->{System.out.println(0/0);}));

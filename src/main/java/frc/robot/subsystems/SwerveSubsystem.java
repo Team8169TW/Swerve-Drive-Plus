@@ -6,6 +6,7 @@ import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -174,6 +175,23 @@ public class SwerveSubsystem extends SubsystemBase {
 
     // Set the module state
     setModuleStates(moduleStates);
+  }
+
+  public void setChassisOutput(double xSpeed, double ySpeed, double turningSpeed){
+    xSpeed *= DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
+    ySpeed *= DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
+
+    turningSpeed = Math.abs(turningSpeed) > 0.05 ? turningSpeed : 0.0;
+    turningSpeed *= -DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
+    turningSpeed = MathUtil.clamp(turningSpeed, -DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond,
+        DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond);
+
+    // Create chassis speeds
+    ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed,
+        Rotation2d.fromDegrees(getRobotDegrees()));
+
+    // Set chassis speeds
+    setChassisSpeeds(chassisSpeeds);
   }
 
   public SwerveModuleState[] getModuleStates() {
