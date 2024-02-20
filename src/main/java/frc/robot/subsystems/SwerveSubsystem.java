@@ -7,6 +7,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -56,6 +57,11 @@ public class SwerveSubsystem extends SubsystemBase {
 
   private Field2d field = new Field2d();
 
+  private PIDController thetaControllerN;
+  private PIDController thetaControllerA;
+
+  private double heading;
+
   // Returns positions of the swerve modules for odometry
   public SwerveModulePosition[] getModulePositions() {
 
@@ -92,26 +98,32 @@ public class SwerveSubsystem extends SubsystemBase {
         getOdometryAngle(), getModulePositions());
     // new Rotation2d(gyro.getYaw() * -1 / 180 * Math.PI), getModulePositions()
 
+    // Set default PID values for thetaPID
+    thetaControllerN = new PIDController(DriveConstants.kPThetaN, DriveConstants.kIThetaN,
+        DriveConstants.kDThetaN);
+    thetaControllerA = new PIDController(DriveConstants.kPThetaA, DriveConstants.kIThetaA,
+        DriveConstants.kDThetaA);
+
     // Configure AutoBuilder
     AutoBuilder.configureHolonomic(
-      this::getPose, 
-      this::resetOdometry, 
-      this::getSpeeds, 
-      this::setChassisSpeeds, 
-      AutoConstants.pathFollowerConfig,
-      () -> {
-          // Boolean supplier that controls when the path will be mirrored for the red alliance
+        this::getPose,
+        this::resetOdometry,
+        this::getSpeeds,
+        this::setChassisSpeeds,
+        AutoConstants.pathFollowerConfig,
+        () -> {
+          // Boolean supplier that controls when the path will be mirrored for the red
+          // alliance
           // This will flip the path being followed to the red side of the field.
           // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
 
           var alliance = DriverStation.getAlliance();
           if (alliance.isPresent()) {
-              return alliance.get() == DriverStation.Alliance.Red;
+            return alliance.get() == DriverStation.Alliance.Red;
           }
           return false;
-      },
-      this
-    );
+        },
+        this);
 
     // Set up custom logging to add the current path to a field 2d widget
     PathPlannerLogging.setLogActivePathCallback((poses) -> field.getObject("path").setPoses(poses));
@@ -122,11 +134,12 @@ public class SwerveSubsystem extends SubsystemBase {
   // Reset gyro heading
   public void zeroHeading() {
     gyro.reset();
+    heading = getHeading();
   }
 
   // // Reset gyro yaw
   // public void resetYaw() {
-  //   gyro.zeroYaw();
+  // gyro.zeroYaw();
   // }
 
   // public void calibrateGyro(){
@@ -140,12 +153,12 @@ public class SwerveSubsystem extends SubsystemBase {
 
   // Return the robot odometry in pose meters
   // public Pose2d getOdometryMeters() {
-  //   return (odometer.getPoseMeters());
+  // return (odometer.getPoseMeters());
   // }
 
   // Return heading in Rotation2d format
   // public Rotation2d getRotation2d() {
-  //   return Rotation2d.fromDegrees(getHeading());
+  // return Rotation2d.fromDegrees(getHeading());
   // }
 
   // Stop all module movement
@@ -169,7 +182,7 @@ public class SwerveSubsystem extends SubsystemBase {
     backRight.setDesiredState(desiredStates[3]);
   }
 
-  public void setChassisSpeeds(ChassisSpeeds chassisSpeeds){
+  public void setChassisSpeeds(ChassisSpeeds chassisSpeeds) {
     // Create module states using array
     SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
 
@@ -177,9 +190,21 @@ public class SwerveSubsystem extends SubsystemBase {
     setModuleStates(moduleStates);
   }
 
-  public void setChassisOutput(double xSpeed, double ySpeed, double turningSpeed){
+  public void setChassisOutput(double xSpeed, double ySpeed, double turningAngle, boolean forAuto) {
     xSpeed *= DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
     ySpeed *= DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
+
+    double turningSpeed;
+    if (forAuto) {
+      heading = getHeading() - turningAngle;
+      turningSpeed = thetaControllerA.calculate(getHeading(), heading);
+    } else {
+      heading -= turningAngle;
+      turningSpeed = thetaControllerN.calculate(getHeading(), heading);
+    }
+
+    // double turningSpeed = thetaController.calculate(getHeading(), heading);
+    SmartDashboard.putNumber("", heading);
 
     turningSpeed = Math.abs(turningSpeed) > 0.05 ? turningSpeed : 0.0;
     turningSpeed *= -DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
@@ -211,7 +236,8 @@ public class SwerveSubsystem extends SubsystemBase {
   public Pose2d getPose() {
     return odometer.getPoseMeters();
     // return odometer.getPoseMeters().rotateBy(Rotation2d.fromDegrees(-90));
-    // return odometer.getPoseMeters().transformBy(new Transform2d(0, 0, Rotation2d.fromDegrees(-90)));
+    // return odometer.getPoseMeters().transformBy(new Transform2d(0, 0,
+    // Rotation2d.fromDegrees(-90)));
   }
 
   // Reset odometer to new Pose2d location
@@ -221,7 +247,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
   // Reset odometer to new Pose2d location but with roation
   // public void resetOdometry(Pose2d pose, Rotation2d rot) {
-  //   odometer.resetPosition(rot, getModulePositions(), pose);
+  // odometer.resetPosition(rot, getModulePositions(), pose);
   // }
 
   // Return an angle from -180 to 180 for robot odometry
@@ -239,7 +265,7 @@ public class SwerveSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("Yaw", gyro.getYaw());
     // SmartDashboard.putNumber("Angle", gyro.getAngle());
     // return (Rotation2d.fromDegrees(gyro.getYaw()));
-    return Rotation2d.fromDegrees(getRobotDegrees()-180);
+    return Rotation2d.fromDegrees(getRobotDegrees() - 180);
   }
 
   // Returns an angle from 0 to 360 that is continuous, meaning it loops
@@ -261,19 +287,19 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   // public double getRumble() {
-  //   return gyro.getRawAccelX();
+  // return gyro.getRawAccelX();
   // }
 
   // public double getRollChange() {
-  //   return (gyro.getRawGyroY());
+  // return (gyro.getRawGyroY());
   // }
 
   // public double getRoll() {
-  //   return (gyro.getRoll());
+  // return (gyro.getRoll());
   // }
 
   // public double getRobotForceNewtons() {
-  //   return (57.0 * 9.8 * gyro.getRawAccelX());
+  // return (57.0 * 9.8 * gyro.getRawAccelX());
   // }
 
   // Periodic looooooop

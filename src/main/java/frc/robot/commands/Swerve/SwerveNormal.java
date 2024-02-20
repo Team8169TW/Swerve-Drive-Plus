@@ -7,7 +7,6 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IOConstants;
 import java.util.function.Supplier;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -17,8 +16,6 @@ public class SwerveNormal extends Command {
   private final SwerveSubsystem swerveSubsystem;
   private final Supplier<Double> xSpdFunction, ySpdFunction, turningSpdFunction;
   private final SlewRateLimiter xLimiter, yLimiter, turningLimiter;
-  private double heading;
-  private PIDController thetaController;
 
   // Command constructor
   public SwerveNormal(
@@ -38,19 +35,12 @@ public class SwerveNormal extends Command {
     this.yLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
     this.turningLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
 
-    // Set default PID values for thetaPID
-    thetaController = new PIDController(DriveConstants.kPThetaController, DriveConstants.kIThetaController,
-        DriveConstants.kDThetaController);
-
-    heading = swerveSubsystem.getHeading();
-
     // Tell command that it needs swerveSubsystem
     addRequirements(swerveSubsystem);
   }
 
   @Override
   public void initialize() {
-    heading = swerveSubsystem.getHeading();
   }
 
   // Running loop of command
@@ -60,23 +50,22 @@ public class SwerveNormal extends Command {
     // Set joystick inputs to speed variables
     double xSpeed = xSpdFunction.get();
     double ySpeed = ySpdFunction.get();
-    double turningSpeed = turningSpdFunction.get();
+    double turningAngle = turningSpdFunction.get();
 
     // Apply deadband to protect motors
     xSpeed = IOConstants.deadbandHandler(xSpeed, IOConstants.kDeadband);
     ySpeed = IOConstants.deadbandHandler(ySpeed, IOConstants.kDeadband);
-    turningSpeed = Math.abs(turningSpeed) > IOConstants.kDeadband ? turningSpeed / (1 - IOConstants.kDeadband) : 0.0;
+    turningAngle = Math.abs(turningAngle) > IOConstants.kDeadband ? turningAngle / (1 - IOConstants.kDeadband) : 0.0;
 
     // Apply slew rate to joystick input to make robot input smoother and mulitply
     // by max speed
     xSpeed = xLimiter.calculate(xSpeed);
     ySpeed = yLimiter.calculate(ySpeed);
-    turningSpeed = turningLimiter.calculate(turningSpeed);
+    turningAngle = turningLimiter.calculate(turningAngle);
 
-    heading -= turningSpeed * 10;
-    turningSpeed = thetaController.calculate(swerveSubsystem.getHeading(), heading);
+    turningAngle *= 8;
 
-    swerveSubsystem.setChassisOutput(xSpeed, ySpeed, turningSpeed);
+    swerveSubsystem.setChassisOutput(xSpeed, ySpeed, turningAngle, false);
   }
 
   // Stop all module motor movement when command ends
