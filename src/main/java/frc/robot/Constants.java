@@ -235,4 +235,12 @@ public final class Constants {
     kShoot,
     kIntake,
   }
+
+  // Limelight
+  public static final class LimelightConstants {
+
+    // Limelight Name Mapping
+    public static final String kShooterLL = "limelight-b";
+    public static final String kInatkeLL = "limelight-c";
+  }
 }
