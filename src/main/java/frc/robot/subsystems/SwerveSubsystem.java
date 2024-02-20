@@ -57,8 +57,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
   private Field2d field = new Field2d();
 
-  private PIDController thetaControllerN;
-  private PIDController thetaControllerA;
+  private PIDController thetaController;
 
   private double heading;
 
@@ -99,10 +98,10 @@ public class SwerveSubsystem extends SubsystemBase {
     // new Rotation2d(gyro.getYaw() * -1 / 180 * Math.PI), getModulePositions()
 
     // Set default PID values for thetaPID
-    thetaControllerN = new PIDController(DriveConstants.kPThetaN, DriveConstants.kIThetaN,
-        DriveConstants.kDThetaN);
-    thetaControllerA = new PIDController(DriveConstants.kPThetaA, DriveConstants.kIThetaA,
-        DriveConstants.kDThetaA);
+    thetaController = new PIDController(
+        DriveConstants.kPTheta,
+        DriveConstants.kITheta,
+        DriveConstants.kDTheta);
 
     // Configure AutoBuilder
     AutoBuilder.configureHolonomic(
@@ -198,20 +197,18 @@ public class SwerveSubsystem extends SubsystemBase {
     setChassisOutput(xSpeed, ySpeed, turningAngle, forAuto, false);
   }
 
-  public void setChassisOutput(double xSpeed, double ySpeed, double turningAngle, boolean forAuto,
-      boolean robotRelative) {
+  public void setChassisOutput(double xSpeed, double ySpeed, double turningAngle,
+      boolean forAuto, boolean robotRelative) {
     xSpeed *= DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
     ySpeed *= DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
 
-    double turningSpeed;
     if (forAuto) {
       heading = getHeading() - turningAngle;
-      turningSpeed = thetaControllerA.calculate(getHeading(), heading);
     } else {
       heading -= turningAngle;
-      turningSpeed = thetaControllerN.calculate(getHeading(), heading);
     }
 
+    double turningSpeed = thetaController.calculate(getHeading(), heading);
     turningSpeed = Math.abs(turningSpeed) > 0.05 ? turningSpeed : 0.0;
     turningSpeed *= -DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
     turningSpeed = MathUtil.clamp(turningSpeed, -DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond,

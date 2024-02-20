@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.RunMode;
 import frc.robot.Constants.ShooterConstants.SpeedSet;
+import frc.robot.commands.Auto.AutoIntakeNote;
 import frc.robot.commands.Intake.IntakeAuto;
 import frc.robot.commands.Intake.IntakeFromHead;
 import frc.robot.commands.Intake.IntakeNormal;
@@ -110,7 +111,8 @@ public class RobotContainer {
         () -> -driverController.getRightX() // R-Axis
     ));
     // Swerve Auto Go
-    driverController.y().toggleOnTrue(new SwerveAutoGo(swerveSubsystem));
+    // driverController.y().toggleOnTrue(new SwerveAutoGo(swerveSubsystem));
+    driverController.y().onTrue(new AutoIntakeNote(swerveSubsystem, intakeSubsystem, linkageSubsystem));
 
     // Disable
     // operatorController.leftBumper().onTrue(new InstantCommand(()->{System.out.println(0/0);}));
