@@ -64,6 +64,8 @@ public class LinkageSubsystem extends SubsystemBase {
     linkagePIDController.setOutputRange(kMinOutput, kMaxOutput);
     linkagePIDController.setFeedbackDevice(linkageAbsEncoder);
     linkageMotor.burnFlash();
+
+    setIdle();
   }
 
   public double getAbsPosition() {

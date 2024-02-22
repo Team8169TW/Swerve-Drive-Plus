@@ -118,8 +118,9 @@ public final class Constants {
     public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 2;
 
     public static final double kPTheta = 0.012;
-    public static final double kDTheta = 0.0;
-    public static final double kITheta = 0.0;
+    public static final double kITheta = 0.02;
+    public static final double kDTheta = 0.0002;
+    public static final double kIZTheta = 40.0;
 
     public static final double kMaxDriveMotorTemp = 33.0;
 

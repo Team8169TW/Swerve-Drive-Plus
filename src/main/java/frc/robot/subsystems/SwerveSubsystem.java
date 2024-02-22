@@ -58,7 +58,6 @@ public class SwerveSubsystem extends SubsystemBase {
   private Field2d field = new Field2d();
 
   private PIDController thetaController;
-
   private double heading;
 
   // Returns positions of the swerve modules for odometry
@@ -102,6 +101,7 @@ public class SwerveSubsystem extends SubsystemBase {
         DriveConstants.kPTheta,
         DriveConstants.kITheta,
         DriveConstants.kDTheta);
+    thetaController.setIZone(DriveConstants.kIZTheta);
 
     // Configure AutoBuilder
     AutoBuilder.configureHolonomic(
@@ -197,8 +197,8 @@ public class SwerveSubsystem extends SubsystemBase {
     setChassisOutput(xSpeed, ySpeed, turningAngle, forAuto, false);
   }
 
-  public void setChassisOutput(double xSpeed, double ySpeed, double turningAngle,
-      boolean forAuto, boolean robotRelative) {
+  public void setChassisOutput(double xSpeed, double ySpeed, double turningAngle, 
+  boolean forAuto,boolean robotRelative) {
     xSpeed *= DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
     ySpeed *= DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
 
