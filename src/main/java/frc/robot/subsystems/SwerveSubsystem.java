@@ -60,6 +60,8 @@ public class SwerveSubsystem extends SubsystemBase {
   private PIDController thetaController;
   private double heading;
 
+  private boolean autoCtrl = false, autoCtrlSig = false; 
+
   // Returns positions of the swerve modules for odometry
   public SwerveModulePosition[] getModulePositions() {
 
@@ -202,6 +204,8 @@ public class SwerveSubsystem extends SubsystemBase {
     xSpeed *= DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
     ySpeed *= DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
 
+    autoCtrl = forAuto;
+
     if (forAuto) {
       heading = getHeading() - turningAngle;
     } else {
@@ -323,19 +327,19 @@ public class SwerveSubsystem extends SubsystemBase {
 
     // Put odometry data on smartdashboard
     SmartDashboard.putNumber("Heading", getHeading());
-    SmartDashboard.putString("Field Location", getPose().getTranslation().toString());
-    SmartDashboard.putNumber("ROBOT DEGREES NAVX", getRobotDegrees());
-    SmartDashboard.putString("ODOMETRY", odometer.getPoseMeters().toString());
-    SmartDashboard.putString("Raw R2d ROBOT DEG", getOdometryAngle().toString());
+    // SmartDashboard.putString("Field Location", getPose().getTranslation().toString());
+    // SmartDashboard.putNumber("ROBOT DEGREES NAVX", getRobotDegrees());
+    // SmartDashboard.putString("ODOMETRY", odometer.getPoseMeters().toString());
+    // SmartDashboard.putString("Raw R2d ROBOT DEG", getOdometryAngle().toString());
 
-    SmartDashboard.putBoolean("Gyro Calibrating", gyro.isCalibrating());
-    SmartDashboard.putBoolean("Magnetic Issues", gyro.isMagneticDisturbance());
-    SmartDashboard.putBoolean("Magnetic Calibartion", gyro.isMagnetometerCalibrated());
+    // SmartDashboard.putBoolean("Gyro Calibrating", gyro.isCalibrating());
+    // SmartDashboard.putBoolean("Magnetic Issues", gyro.isMagneticDisturbance());
+    // SmartDashboard.putBoolean("Magnetic Calibartion", gyro.isMagnetometerCalibrated());
 
-    SmartDashboard.putNumber("Robot Acceleration X", gyro.getRawAccelX());
-    SmartDashboard.putNumber("Robot Acceleration Y", gyro.getRawAccelY());
-    SmartDashboard.putNumber("Robot Force X Newtons", 57.0 * 9.8 * gyro.getRawAccelX());
-    SmartDashboard.putNumber("Robot Force X Pounds", (57.0 * 9.8 * gyro.getRawAccelX()) / 4.45);
+    // SmartDashboard.putNumber("Robot Acceleration X", gyro.getRawAccelX());
+    // SmartDashboard.putNumber("Robot Acceleration Y", gyro.getRawAccelY());
+    // SmartDashboard.putNumber("Robot Force X Newtons", 57.0 * 9.8 * gyro.getRawAccelX());
+    // SmartDashboard.putNumber("Robot Force X Pounds", (57.0 * 9.8 * gyro.getRawAccelX()) / 4.45);
 
     // SmartDashboard.putNumber("RAW ROLL", getRoll());
     // SmartDashboard.putNumber("RAW Y", getRollChange());
@@ -346,5 +350,11 @@ public class SwerveSubsystem extends SubsystemBase {
     backLeft.update();
     backRight.update();
 
+    if(autoCtrl){
+      autoCtrlSig = !autoCtrlSig;
+    }else{
+      autoCtrlSig = false;
+    }
+    SmartDashboard.putBoolean("Swerve isAuto", autoCtrlSig);
   }
 }
