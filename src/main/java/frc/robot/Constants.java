@@ -241,7 +241,17 @@ public final class Constants {
   public static final class LimelightConstants {
 
     // Limelight Name Mapping
-    public static final String kShooterLL = "limelight-b"; // IP: 10.81.69.13
-    public static final String kInatkeLL = "limelight-c"; // IP: 10.81.69.15
+    public enum Limelight {
+      kShooter("limelight-b", 1), // IP: 10.81.69.13
+      kInatke("limelight-c", -1); // IP: 10.81.69.15
+
+      public final String hostname;
+      public final int approachingXSpeed;
+
+      private Limelight(String hostname, int approachingXSpeed) {
+          this.hostname = hostname;
+          this.approachingXSpeed = approachingXSpeed;
+      }
+    }
   }
 }

@@ -20,8 +20,10 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.LimelightHelpers;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.LimelightConstants.Limelight;
 
 public class SwerveSubsystem extends SubsystemBase {
 
@@ -59,8 +61,6 @@ public class SwerveSubsystem extends SubsystemBase {
 
   private PIDController thetaController;
   private double heading;
-
-  private boolean autoCtrl = false, autoCtrlSig = false; 
 
   // Returns positions of the swerve modules for odometry
   public SwerveModulePosition[] getModulePositions() {
@@ -203,8 +203,6 @@ public class SwerveSubsystem extends SubsystemBase {
   boolean forAuto,boolean robotRelative) {
     xSpeed *= DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
     ySpeed *= DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
-
-    autoCtrl = forAuto;
 
     if (forAuto) {
       heading = getHeading() - turningAngle;
@@ -350,11 +348,7 @@ public class SwerveSubsystem extends SubsystemBase {
     backLeft.update();
     backRight.update();
 
-    if(autoCtrl){
-      autoCtrlSig = !autoCtrlSig;
-    }else{
-      autoCtrlSig = false;
-    }
-    SmartDashboard.putBoolean("Swerve isAuto", autoCtrlSig);
+    SmartDashboard.putBoolean("LL Intake valid", LimelightHelpers.getTV(Limelight.kInatke.hostname));
+    SmartDashboard.putBoolean("LL Shooter valid", LimelightHelpers.getTV(Limelight.kShooter.hostname));
   }
 }

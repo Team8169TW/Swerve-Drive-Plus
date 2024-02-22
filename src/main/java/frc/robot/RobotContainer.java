@@ -15,8 +15,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.RunMode;
+import frc.robot.Constants.LimelightConstants.Limelight;
 import frc.robot.Constants.ShooterConstants.SpeedSet;
-import frc.robot.commands.Auto.AutoIntakeNote;
 import frc.robot.commands.Intake.IntakeAuto;
 import frc.robot.commands.Intake.IntakeFromHead;
 import frc.robot.commands.Intake.IntakeNormal;
@@ -30,6 +30,7 @@ import frc.robot.commands.Swerve.SwerveXMode;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LinkageSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.StatusSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
 /**
@@ -68,6 +69,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     setDefaultCommand();
+    new StatusSubsystem();
   }
 
   /**
@@ -87,17 +89,7 @@ public class RobotContainer {
     // Intake from head
     operatorController.x().toggleOnTrue(new IntakeFromHead(intakeSubsystem, shooterSubsystem, linkageSubsystem));
 
-    // Linkage fine
-    driverController.leftBumper().whileTrue(new LinkageNormal(linkageSubsystem, RunMode.kUp));
-    driverController.rightBumper().whileTrue(new LinkageNormal(linkageSubsystem, RunMode.kDown));
-    // Linkage auto
-    driverController.pov(0).onTrue(new LinkageAuto(linkageSubsystem, RunMode.kShoot));
-    driverController.pov(90).onTrue(new LinkageAuto(linkageSubsystem, RunMode.kIdle));
-    driverController.pov(180).onTrue(new LinkageAuto(linkageSubsystem, RunMode.kIntake));
-
     // Shooter
-    // operatorController.start().onTrue(new ShooterNormal(shooterSubsystem,
-    // operatorControllerNC::getBackButton, linkageSubsystem));
     operatorController.pov(0).onTrue(
         new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getLeftBumper, SpeedSet.kSpeak));
     operatorController.pov(90).onTrue(
@@ -107,19 +99,38 @@ public class RobotContainer {
     operatorController.pov(270).onTrue(
         new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getLeftBumper, SpeedSet.kManual));
 
+    // Linkage fine
+    driverController.y().whileTrue(new LinkageNormal(linkageSubsystem, RunMode.kUp));
+    driverController.a().whileTrue(new LinkageNormal(linkageSubsystem, RunMode.kDown));
+    // Linkage auto
+    driverController.pov(0).onTrue(new LinkageAuto(linkageSubsystem, RunMode.kShoot));
+    driverController.pov(90).onTrue(new LinkageAuto(linkageSubsystem, RunMode.kIdle));
+    driverController.pov(180).onTrue(new LinkageAuto(linkageSubsystem, RunMode.kIntake));
+
     // Swerve Brake
     driverController.x().whileTrue(new SwerveXMode(swerveSubsystem));
-    // Swerve Lock Heading
-    driverController.b().toggleOnTrue(new SwerveLockHeading(swerveSubsystem,
+    // Swerve Lock Heading Noto
+    driverController.rightBumper().toggleOnTrue(new SwerveLockHeading(swerveSubsystem,
         () -> -driverController.getLeftY(), // X-Axis
         () -> -driverController.getLeftX(), // Y-Axis
-        () -> -driverController.getRightX() // R-Axis
+        () -> -driverController.getRightX(), // R-Axis
+        Limelight.kInatke
     ));
+    // Swerve Lock Heading AprilTag
+    driverController.leftBumper().toggleOnTrue(new SwerveLockHeading(swerveSubsystem,
+        () -> -driverController.getLeftY(), // X-Axis
+        () -> -driverController.getLeftX(), // Y-Axis
+        () -> -driverController.getRightX(), // R-Axis
+        Limelight.kShooter
+    ));
+    // Swerve Auto approaching Note
+    driverController.axisGreaterThan(XboxController.Axis.kRightTrigger.value, 0.1)
+        .whileTrue(new SwerveAutoGo(swerveSubsystem, Limelight.kInatke, driverController::getRightTriggerAxis));
+    // Swerve Auto approaching AprilTag
+    driverController.axisGreaterThan(XboxController.Axis.kLeftTrigger.value, 0.1)
+        .whileTrue(new SwerveAutoGo(swerveSubsystem, Limelight.kShooter, driverController::getLeftTriggerAxis));
     // Swerve Auto Go
-    // driverController.y().toggleOnTrue(new SwerveAutoGo(swerveSubsystem));
-    driverController.y().onTrue(new AutoIntakeNote(swerveSubsystem, intakeSubsystem, linkageSubsystem));
-    driverController.axisGreaterThan(3, 0.1)
-        .whileTrue(new SwerveAutoGo(swerveSubsystem, driverController::getRightTriggerAxis));
+    // driverController.y().onTrue(new AutoIntakeNote(swerveSubsystem, intakeSubsystem, linkageSubsystem));
 
     // Disable
     // operatorController.leftBumper().onTrue(new

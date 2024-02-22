@@ -5,6 +5,7 @@
 package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import frc.robot.Constants.LimelightConstants.Limelight;
 import frc.robot.commands.Intake.IntakeAuto;
 import frc.robot.commands.Swerve.SwerveAutoGo;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -23,6 +24,6 @@ public class AutoIntakeNote extends ParallelDeadlineGroup {
     // Add the deadline command in the super() call. Add other commands using
     // addCommands().
     super(new IntakeAuto(intakeSubsystem, linkageSubsystem));
-    addCommands(new SwerveAutoGo(swerveSubsystem));
+    addCommands(new SwerveAutoGo(swerveSubsystem, Limelight.kInatke));
   }
 }

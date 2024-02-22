@@ -10,13 +10,15 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IOConstants;
-import frc.robot.Constants.LimelightConstants;
+import frc.robot.Constants.LimelightConstants.Limelight;
 import frc.robot.LimelightHelpers;
+import frc.robot.subsystems.StatusSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class SwerveLockHeading extends Command {
   private final SwerveSubsystem swerveSubsystem;
   private final Supplier<Double> xSpdFunction, ySpdFunction, turningSpdFunction;
+  protected final Limelight limelight;
   private final SlewRateLimiter xLimiter, yLimiter, turningLimiter;
 
   /** Creates a new SwerveLockHeading. */
@@ -24,7 +26,8 @@ public class SwerveLockHeading extends Command {
       SwerveSubsystem swerveSubsystem,
       Supplier<Double> xSpdFunction,
       Supplier<Double> ySpdFunction,
-      Supplier<Double> turningSpdFunction) {
+      Supplier<Double> turningSpdFunction,
+      Limelight limelight) {
     // Use addRequirements() here to declare subsystem dependencies.
 
     // Assign values passed from constructor
@@ -32,6 +35,7 @@ public class SwerveLockHeading extends Command {
     this.xSpdFunction = xSpdFunction;
     this.ySpdFunction = ySpdFunction;
     this.turningSpdFunction = turningSpdFunction;
+    this.limelight = limelight;
 
     // Slew rate limiter
     this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
@@ -45,6 +49,7 @@ public class SwerveLockHeading extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    StatusSubsystem.setSwerveAuto(true, limelight);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -66,8 +71,8 @@ public class SwerveLockHeading extends Command {
     ySpeed = yLimiter.calculate(ySpeed);
     turningAngle = turningLimiter.calculate(turningAngle);
 
-    if (turningAngle == 0 && LimelightHelpers.getTV(LimelightConstants.kInatkeLL)) {
-      turningAngle = -LimelightHelpers.getTX(LimelightConstants.kInatkeLL);
+    if (turningAngle == 0 && LimelightHelpers.getTV(limelight.hostname)) {
+      turningAngle = -LimelightHelpers.getTX(limelight.hostname);
       swerveSubsystem.setChassisOutput(xSpeed, ySpeed, turningAngle, true);
     } else {
       turningAngle *= 10;
@@ -80,6 +85,7 @@ public class SwerveLockHeading extends Command {
   @Override
   public void end(boolean interrupted) {
     swerveSubsystem.stopModules();
+    StatusSubsystem.setSwerveAuto(false, limelight);
   }
 
   // Returns true when the command should end.

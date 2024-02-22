@@ -1,0 +1,68 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.4,
+        "y": 6.85
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 0.35,
+        "y": 6.85
+      },
+      "isLocked": true,
+      "linkedName": "WallSpeakR"
+    },
+    {
+      "anchor": {
+        "x": 0.9020804523090531,
+        "y": 6.745471500202259
+      },
+      "prevControl": {
+        "x": 0.8925532851757516,
+        "y": 6.916212301758757
+      },
+      "nextControl": {
+        "x": 0.913422868512404,
+        "y": 6.5421987742123635
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.8,
+        "y": 6.4
+      },
+      "prevControl": {
+        "x": 0.8250000000000001,
+        "y": 6.443301270189222
+      },
+      "nextControl": null,
+      "isLocked": true,
+      "linkedName": "SpaekR"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 99999.0,
+    "maxAngularAcceleration": 999999.0
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": -120.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Start",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}
