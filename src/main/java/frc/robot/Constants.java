@@ -152,6 +152,12 @@ public final class Constants {
 
     // Intake Sensor Gate Value
     public static final int kIntakeGateValue = 300;
+
+    public enum IntakeState{
+      kRunning,
+      kBlocked,
+      kStop,
+    }
   }
 
   // Shooter
@@ -193,6 +199,12 @@ public final class Constants {
           this.bottomSpeed = bottomSpeed;
       }
     }
+
+    public enum ShooterState{
+      kReady,
+      kPreparing,
+      kStop,
+    }
   }
 
   // Linkage
@@ -224,6 +236,11 @@ public final class Constants {
     // Linkage Motor Limit
     public static final double kUpLimit = kShootPosition - 1;
     public static final double kDownLimit = kIntakePosition + 1;
+
+    public enum LinkageState {
+      kOk,
+      kAdj,
+    }
   }
 
   public enum RunMode {

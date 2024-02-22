@@ -15,6 +15,7 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.ShooterConstants.ShooterState;
 
 public class ShooterSubsystem extends SubsystemBase {
   private final CANSparkMax topShooterMotor = new CANSparkMax(ShooterConstants.kTopShooterMotorPort,
@@ -86,8 +87,24 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Shooter RPM T", shooterEncoderT.getVelocity());
     SmartDashboard.putNumber("Shooter RPM B", shooterEncoderB.getVelocity());
 
-    SmartDashboard.putBoolean("Shooter OK T", Math.abs(shooterEncoderT.getVelocity() - setPointTop) < 50);
-    SmartDashboard.putBoolean("Shooter OK B", Math.abs(shooterEncoderB.getVelocity() - setPointBottom) < 50);
+    // SmartDashboard.putBoolean("Shooter OK T", Math.abs(shooterEncoderT.getVelocity() - setPointTop) < 50);
+    // SmartDashboard.putBoolean("Shooter OK B", Math.abs(shooterEncoderB.getVelocity() - setPointBottom) < 50);
+
+    if(topShooterMotor.getAppliedOutput() == 0){
+      StatusSubsystem.setSooterT(ShooterState.kStop);
+    }else if(Math.abs(shooterEncoderT.getVelocity() - setPointTop) < 50){
+      StatusSubsystem.setSooterT(ShooterState.kReady);
+    }else{
+      StatusSubsystem.setSooterT(ShooterState.kPreparing);
+    }
+
+    if(bottomShooterMotor.getAppliedOutput() == 0){
+      StatusSubsystem.setSooterB(ShooterState.kStop);
+    }else if(Math.abs(shooterEncoderB.getVelocity() - setPointBottom) < 50){
+      StatusSubsystem.setSooterB(ShooterState.kReady);
+    }else{
+      StatusSubsystem.setSooterB(ShooterState.kPreparing);
+    }
 
     // // read PID coefficients from SmartDashboard
     double p = SmartDashboard.getNumber("Shooter P Gain", 0);

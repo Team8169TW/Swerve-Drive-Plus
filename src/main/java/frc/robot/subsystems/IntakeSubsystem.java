@@ -15,10 +15,10 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.IntakeConstants.IntakeState;
 
 public class IntakeSubsystem extends SubsystemBase {
   private CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.kIntakeMotorPort, MotorType.kBrushless);
-  private boolean blocked = false, blockSig = false;
 
   /**
    * Change the I2C port below to match the connection of your color sensor
@@ -93,15 +93,12 @@ public class IntakeSubsystem extends SubsystemBase {
     SmartDashboard.putBoolean("Intake isConnected", colorSensor.isConnected());
     SmartDashboard.putNumber("Intake C", intakeMotor.getOutputCurrent());
 
-    if(!blocked && intakeMotor.getOutputCurrent() >= 70){
-      blocked = true;
-      blockSig = true;
-    }else if(intakeMotor.getOutputCurrent() < 70){
-      blocked = false;
-      blockSig = false;
-    }else{
-      blockSig = !blockSig;
+    if (intakeMotor.getAppliedOutput() == 0) {
+      StatusSubsystem.setIntake(IntakeState.kStop);
+    } else if (intakeMotor.getOutputCurrent() >= 70) {
+      StatusSubsystem.setIntake(IntakeState.kBlocked);
+    } else {
+      StatusSubsystem.setIntake(IntakeState.kRunning);
     }
-    SmartDashboard.putBoolean("Intake isBlock", blockSig);
   }
 }

@@ -17,6 +17,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LinkageConstants;
+import frc.robot.Constants.LinkageConstants.LinkageState;
 
 public class LinkageSubsystem extends SubsystemBase {
   private final CANSparkMax linkageMotor = new CANSparkMax(LinkageConstants.kLinkageMotorPort, MotorType.kBrushless);
@@ -103,6 +104,12 @@ public class LinkageSubsystem extends SubsystemBase {
     if((max != kMaxOutput) || (min != kMinOutput)) { 
       linkagePIDController.setOutputRange(min, max);
       kMinOutput = min; kMaxOutput = max;
+    }
+
+    if(Math.abs(linkageMotor.getAppliedOutput())<0.05){
+      StatusSubsystem.setLinkage(LinkageState.kOk);
+    }else{
+      StatusSubsystem.setLinkage(LinkageState.kAdj);
     }
   }
 
