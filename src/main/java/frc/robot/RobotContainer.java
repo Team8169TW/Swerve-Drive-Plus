@@ -99,13 +99,13 @@ public class RobotContainer {
     // operatorController.start().onTrue(new ShooterNormal(shooterSubsystem,
     // operatorControllerNC::getBackButton, linkageSubsystem));
     operatorController.pov(0).onTrue(
-        new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kSpeak));
+        new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getLeftBumper, SpeedSet.kSpeak));
     operatorController.pov(90).onTrue(
-        new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kAmp));
+        new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getLeftBumper, SpeedSet.kAmp));
     operatorController.pov(180).onTrue(
-        new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kStage));
+        new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getLeftBumper, SpeedSet.kStage));
     operatorController.pov(270).onTrue(
-        new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kManual));
+        new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getLeftBumper, SpeedSet.kManual));
 
     // Swerve Brake
     driverController.x().whileTrue(new SwerveXMode(swerveSubsystem));
