@@ -18,6 +18,7 @@ import frc.robot.Constants.IntakeConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
   private CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.kIntakeMotorPort, MotorType.kBrushless);
+  private boolean blocked = false, blockSig = false;
 
   /**
    * Change the I2C port below to match the connection of your color sensor
@@ -90,7 +91,17 @@ public class IntakeSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Intake Proximity", getProximity());
     SmartDashboard.putBoolean("Intake isPass", isPass());
     SmartDashboard.putBoolean("Intake isConnected", colorSensor.isConnected());
-    SmartDashboard.putBoolean("Intake isBlock", intakeMotor.getOutputCurrent() > 70);
     SmartDashboard.putNumber("Intake C", intakeMotor.getOutputCurrent());
+
+    if(!blocked && intakeMotor.getOutputCurrent() >= 70){
+      blocked = true;
+      blockSig = true;
+    }else if(intakeMotor.getOutputCurrent() < 70){
+      blocked = false;
+      blockSig = false;
+    }else{
+      blockSig = !blockSig;
+    }
+    SmartDashboard.putBoolean("Intake isBlock", blockSig);
   }
 }
