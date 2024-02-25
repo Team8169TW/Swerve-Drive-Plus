@@ -1,0 +1,67 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.4,
+      "y": 6.85
+    },
+    "rotation": 0.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartR to SpeakR"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SpeakR to N1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "N1 to SpeakC"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SpeakC to N2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "N2 to SpeakC"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SpeakC to N3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "N3 to SpeakC"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "copyHeading"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

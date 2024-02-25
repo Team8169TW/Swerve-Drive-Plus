@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.LimelightHelpers;
 import frc.robot.Constants.AutoConstants;
@@ -61,6 +62,9 @@ public class SwerveSubsystem extends SubsystemBase {
 
   private PIDController thetaController;
   private double heading;
+
+  public double kP = DriveConstants.kPTheta, kI = DriveConstants.kITheta, kD = DriveConstants.kDTheta,
+      kIZone = DriveConstants.kIZTheta;
 
   // Returns positions of the swerve modules for odometry
   public SwerveModulePosition[] getModulePositions() {
@@ -199,8 +203,8 @@ public class SwerveSubsystem extends SubsystemBase {
     setChassisOutput(xSpeed, ySpeed, turningAngle, forAuto, false);
   }
 
-  public void setChassisOutput(double xSpeed, double ySpeed, double turningAngle, 
-  boolean forAuto,boolean robotRelative) {
+  public void setChassisOutput(double xSpeed, double ySpeed, double turningAngle,
+      boolean forAuto, boolean robotRelative) {
     xSpeed *= DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
     ySpeed *= DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
 
@@ -314,6 +318,10 @@ public class SwerveSubsystem extends SubsystemBase {
   // return (57.0 * 9.8 * gyro.getRawAccelX());
   // }
 
+  public Command copyHeading() {
+    return this.runOnce(() -> heading = getHeading());
+  }
+
   // Periodic looooooop
   @Override
   public void periodic() {
@@ -325,19 +333,23 @@ public class SwerveSubsystem extends SubsystemBase {
 
     // Put odometry data on smartdashboard
     SmartDashboard.putNumber("Heading", getHeading());
-    // SmartDashboard.putString("Field Location", getPose().getTranslation().toString());
+    // SmartDashboard.putString("Field Location",
+    // getPose().getTranslation().toString());
     // SmartDashboard.putNumber("ROBOT DEGREES NAVX", getRobotDegrees());
     // SmartDashboard.putString("ODOMETRY", odometer.getPoseMeters().toString());
     // SmartDashboard.putString("Raw R2d ROBOT DEG", getOdometryAngle().toString());
 
     // SmartDashboard.putBoolean("Gyro Calibrating", gyro.isCalibrating());
     // SmartDashboard.putBoolean("Magnetic Issues", gyro.isMagneticDisturbance());
-    // SmartDashboard.putBoolean("Magnetic Calibartion", gyro.isMagnetometerCalibrated());
+    // SmartDashboard.putBoolean("Magnetic Calibartion",
+    // gyro.isMagnetometerCalibrated());
 
     // SmartDashboard.putNumber("Robot Acceleration X", gyro.getRawAccelX());
     // SmartDashboard.putNumber("Robot Acceleration Y", gyro.getRawAccelY());
-    // SmartDashboard.putNumber("Robot Force X Newtons", 57.0 * 9.8 * gyro.getRawAccelX());
-    // SmartDashboard.putNumber("Robot Force X Pounds", (57.0 * 9.8 * gyro.getRawAccelX()) / 4.45);
+    // SmartDashboard.putNumber("Robot Force X Newtons", 57.0 * 9.8 *
+    // gyro.getRawAccelX());
+    // SmartDashboard.putNumber("Robot Force X Pounds", (57.0 * 9.8 *
+    // gyro.getRawAccelX()) / 4.45);
 
     // SmartDashboard.putNumber("RAW ROLL", getRoll());
     // SmartDashboard.putNumber("RAW Y", getRollChange());

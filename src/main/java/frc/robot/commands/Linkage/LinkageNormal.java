@@ -18,7 +18,7 @@ public class LinkageNormal extends Command {
     this.mode = mode;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(linkageSubsystem);
+    // addRequirements(linkageSubsystem);
   }
 
   // Called when the command is initially scheduled.

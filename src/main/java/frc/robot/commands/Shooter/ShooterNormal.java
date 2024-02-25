@@ -19,7 +19,8 @@ public class ShooterNormal extends Command {
   LinkageSubsystem linkageSubsystem;
 
   /** Creates a new ShooterNormal. */
-  public ShooterNormal(ShooterSubsystem shooterSubsystem, LinkageSubsystem linkageSubsystem, BooleanSupplier onStop, SpeedSet speed) {
+  public ShooterNormal(ShooterSubsystem shooterSubsystem, LinkageSubsystem linkageSubsystem, BooleanSupplier onStop,
+      SpeedSet speed) {
     this.shooterSubsystem = shooterSubsystem;
     this.onStop = onStop;
     this.speed = speed;
@@ -62,6 +63,6 @@ public class ShooterNormal extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return onStop.getAsBoolean();
+    return onStop == null ? onStop.getAsBoolean() : false;
   }
 }

@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 0.7,
-        "y": 5.5
+        "x": 1.1014358661307162,
+        "y": 5.5007984334432125
       },
       "prevControl": {
-        "x": 1.7,
-        "y": 5.5
+        "x": 2.101435866130716,
+        "y": 5.5007984334432125
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "SpeakC"
     }
   ],
   "rotationTargets": [],

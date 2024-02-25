@@ -3,25 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.1,
-        "y": 5.5
+        "x": 1.1014358661307162,
+        "y": 5.5007984334432125
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.1,
-        "y": 5.5
+        "x": 1.8662040127673811,
+        "y": 6.480537525821024
+      },
+      "isLocked": false,
+      "linkedName": "SpeakC"
+    },
+    {
+      "anchor": {
+        "x": 6.669383519993806,
+        "y": 6.450633746217926
+      },
+      "prevControl": {
+        "x": 6.009178522384307,
+        "y": 7.156475033984765
+      },
+      "nextControl": {
+        "x": 7.567700121997445,
+        "y": 5.490221526564266
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.8,
-        "y": 5.5
+        "x": 6.956812084318097,
+        "y": 1.551177679492905
       },
       "prevControl": {
-        "x": 1.7999999999999998,
-        "y": 5.5
+        "x": 7.150526126485958,
+        "y": 2.994805658136718
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,11 +55,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Speak to ",
   "previewStartingState": {
     "rotation": 180.0,
     "velocity": 0

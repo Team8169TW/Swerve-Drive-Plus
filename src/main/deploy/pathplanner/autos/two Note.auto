@@ -79,7 +79,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Speak fwd 2m"
+                        "pathName": "SpeakC to N2"
                       }
                     }
                   ]
@@ -97,7 +97,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "back to Speak"
+            "pathName": "N2 to SpeakC"
           }
         },
         {
@@ -149,6 +149,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "copyHeading"
           }
         }
       ]

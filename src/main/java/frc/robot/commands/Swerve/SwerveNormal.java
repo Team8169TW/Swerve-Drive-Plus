@@ -63,7 +63,7 @@ public class SwerveNormal extends Command {
     ySpeed = yLimiter.calculate(ySpeed);
     turningAngle = turningLimiter.calculate(turningAngle);
 
-    turningAngle *= 8;
+    turningAngle *= 5;
 
     swerveSubsystem.setChassisOutput(xSpeed, ySpeed, turningAngle);
   }

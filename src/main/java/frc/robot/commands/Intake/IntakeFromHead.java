@@ -39,7 +39,7 @@ public class IntakeFromHead extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println(timer.get());
+    // System.out.println(timer.get());
     if(intakeSubsystem.isPass() && timer.get()==0){
       timer.start();
       intakeSubsystem.runRev();
@@ -58,6 +58,6 @@ public class IntakeFromHead extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return timer.get() > 0.15;
+    return timer.get() > 0.10;
   }
 }

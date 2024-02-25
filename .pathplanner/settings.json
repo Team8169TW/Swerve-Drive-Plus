@@ -3,6 +3,7 @@
   "robotLength": 0.63,
   "holonomicMode": true,
   "pathFolders": [
+    "Speak to ",
     "Start"
   ],
   "autoFolders": [],

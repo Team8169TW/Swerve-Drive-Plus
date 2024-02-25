@@ -9,6 +9,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -17,6 +18,7 @@ import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.RunMode;
 import frc.robot.Constants.LimelightConstants.Limelight;
 import frc.robot.Constants.ShooterConstants.SpeedSet;
+import frc.robot.commands.Auto.AutoShoot;
 import frc.robot.commands.Intake.IntakeAuto;
 import frc.robot.commands.Intake.IntakeFromHead;
 import frc.robot.commands.Intake.IntakeNormal;
@@ -135,6 +137,8 @@ public class RobotContainer {
     // Disable
     // operatorController.leftBumper().onTrue(new
     // InstantCommand(()->{System.out.println(0/0);}));
+
+    // Shuffleboard.getTab("test").add(new AutoShoot(shooterSubsystem, linkageSubsystem, intakeSubsystem));
   }
 
   private void setDefaultCommand() {
@@ -153,6 +157,9 @@ public class RobotContainer {
         new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kSpeak));
     NamedCommands.registerCommand("IntakeNormalFwd", new IntakeNormal(intakeSubsystem, RunMode.kFwd));
     NamedCommands.registerCommand("IntakeAuto", new IntakeAuto(intakeSubsystem, linkageSubsystem));
+
+    NamedCommands.registerCommand("copyHeading", swerveSubsystem.copyHeading());
+    // NamedCommands.registerCommand("AutoShoot", new AutoShoot(shooterSubsystem, linkageSubsystem, intakeSubsystem));
   }
 
   /**

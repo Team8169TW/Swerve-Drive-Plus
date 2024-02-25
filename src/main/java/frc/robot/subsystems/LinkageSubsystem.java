@@ -20,25 +20,31 @@ import frc.robot.Constants.LinkageConstants;
 import frc.robot.Constants.LinkageConstants.LinkageState;
 
 public class LinkageSubsystem extends SubsystemBase {
-  private final CANSparkMax linkageMotor = new CANSparkMax(LinkageConstants.kLinkageMotorPort, MotorType.kBrushless);
-  private final RelativeEncoder linkageEncoder = linkageMotor.getEncoder();
-  private final SparkAbsoluteEncoder linkageAbsEncoder = linkageMotor.getAbsoluteEncoder(Type.kDutyCycle);
-  private final SparkPIDController linkagePIDController = linkageMotor.getPIDController();
+  private final CANSparkMax linkageRMotor = new CANSparkMax(LinkageConstants.kLinkageRMotorPort, MotorType.kBrushless);
+  private final CANSparkMax linkageLMotor = new CANSparkMax(LinkageConstants.kLinkageLMotorPort, MotorType.kBrushless);
+  private final RelativeEncoder linkageEncoder = linkageRMotor.getEncoder();
+  private final SparkAbsoluteEncoder linkageAbsEncoder = linkageRMotor.getAbsoluteEncoder(Type.kDutyCycle);
+  private final SparkPIDController linkagePIDController = linkageRMotor.getPIDController();
 
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
 
   /** Creates a new LinkageSubsystem. */
   public LinkageSubsystem() {
-    linkageMotor.setInverted(true);
-    linkageMotor.setIdleMode(IdleMode.kBrake);
+    linkageRMotor.setInverted(true);
+    linkageRMotor.setIdleMode(IdleMode.kBrake);
+
+    linkageLMotor.setInverted(false);
+    linkageLMotor.setIdleMode(IdleMode.kBrake);
+
+    linkageLMotor.follow(linkageRMotor, true);
 
     linkageEncoder.setPosition(linkageAbsEncoder.getPosition());
 
-    linkageMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
-    linkageMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
+    linkageRMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
+    linkageRMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
 
-    linkageMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, (float) LinkageConstants.kDownLimit);
-    linkageMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, (float) LinkageConstants.kUpLimit);
+    linkageRMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, (float) LinkageConstants.kDownLimit);
+    linkageRMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, (float) LinkageConstants.kUpLimit);
 
     kP = LinkageConstants.kP;
     kI = LinkageConstants.kI;
@@ -64,9 +70,9 @@ public class LinkageSubsystem extends SubsystemBase {
     linkagePIDController.setFF(kFF);
     linkagePIDController.setOutputRange(kMinOutput, kMaxOutput);
     linkagePIDController.setFeedbackDevice(linkageAbsEncoder);
-    linkageMotor.burnFlash();
+    linkageRMotor.burnFlash();
 
-    setIdle();
+    // setIdle();
   }
 
   public double getAbsPosition() {
@@ -106,7 +112,7 @@ public class LinkageSubsystem extends SubsystemBase {
       kMinOutput = min; kMaxOutput = max;
     }
 
-    if(Math.abs(linkageMotor.getAppliedOutput())<0.05){
+    if(Math.abs(linkageRMotor.getAppliedOutput())<0.05){
       StatusSubsystem.setLinkage(LinkageState.kOk);
     }else{
       StatusSubsystem.setLinkage(LinkageState.kAdj);
@@ -126,15 +132,15 @@ public class LinkageSubsystem extends SubsystemBase {
   }
 
   public void upFine() {
-    linkageMotor.set(-LinkageConstants.kLinkageMotorRateFine);
+    linkageRMotor.set(-LinkageConstants.kLinkageMotorRateFine);
   }
 
   public void downFine() {
-    linkageMotor.set(LinkageConstants.kLinkageMotorRateFine);
+    linkageRMotor.set(LinkageConstants.kLinkageMotorRateFine);
   }
 
   public void stop() {
-    linkageMotor.set(0);
+    linkageRMotor.set(0);
   }
 
   public void hold(){

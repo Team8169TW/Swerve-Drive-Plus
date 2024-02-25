@@ -117,9 +117,9 @@ public final class Constants {
     public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 8;
     public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 2;
 
-    public static final double kPTheta = 0.012;
-    public static final double kITheta = 0.02;
-    public static final double kDTheta = 0.0002;
+    public static final double kPTheta = 0.012; 
+    public static final double kITheta = 0.01;
+    public static final double kDTheta = 0.0001;
     public static final double kIZTheta = 40.0;
 
     public static final double kMaxDriveMotorTemp = 33.0;
@@ -175,10 +175,10 @@ public final class Constants {
     public static final int kShooterMotorDefaultRPM = 3600;
 
     // Shooter Motor PID
-    public static final double kP = 0.0005;
-    public static final double kI = 0.0000008;
+    public static final double kP = 0.0007;
+    public static final double kI = 0.0000005;
     public static final double kD = 0.00001;
-    public static final double kIZone = 400;
+    public static final double kIZone = 200;
     public static final double kFF = 0.00018;
     public static final double kRamprate = 50000;
 
@@ -187,7 +187,7 @@ public final class Constants {
 
     public enum SpeedSet {
       kSpeak(3600, 4400),
-      kAmp(600, 800),
+      kAmp(800, 850),
       kStage(875, 3795),
       kManual(3600, 3600);
 
@@ -211,7 +211,8 @@ public final class Constants {
   public static final class LinkageConstants {
 
     // Linkage Motor Ports
-    public static final int kLinkageMotorPort = 9;
+    public static final int kLinkageLMotorPort = 13;
+    public static final int kLinkageRMotorPort = 9;
 
     // Linkage Motor PID
     public static final double kP = 0.02; // 0.02
@@ -226,12 +227,12 @@ public final class Constants {
     public static final double kLinkageMotorRateFine = 0.4;
 
     // Linkage Motor Ratio
-    public static final double kLinkageMotorGearRatio = 125.0 / 14 * 46;
+    public static final double kLinkageMotorGearRatio = 100.0 / 14 * 46;
 
     // Linkage Motor Position
-    public static final double kShootPosition = 115.00;
-    public static final double kIntakePosition = 182.50;
-    public static final double kIdlePosition = 155.00;
+    public static final double kShootPosition = 41.00;
+    public static final double kIdlePosition = 70.00;
+    public static final double kIntakePosition = 92.00;
 
     // Linkage Motor Limit
     public static final double kUpLimit = kShootPosition - 1;
