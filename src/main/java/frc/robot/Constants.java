@@ -117,7 +117,7 @@ public final class Constants {
     public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 8;
     public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 2;
 
-    public static final double kPTheta = 0.012; 
+    public static final double kPTheta = 0.012;
     public static final double kITheta = 0.01;
     public static final double kDTheta = 0.0001;
     public static final double kIZTheta = 40.0;
@@ -153,7 +153,7 @@ public final class Constants {
     // Intake Sensor Gate Value
     public static final int kIntakeGateValue = 300;
 
-    public enum IntakeState{
+    public enum IntakeState {
       kRunning,
       kBlocked,
       kStop,
@@ -171,7 +171,7 @@ public final class Constants {
     public static final double kShooterMotorGearRatio = 8.0 / 7.0;
 
     // Shooter Motor Speed
-    public static final int kShooterMotorMaxRPM = 5600;
+    public static final int kShooterMaxRPM = (int) Math.floor(5600 * kShooterMotorGearRatio);
     public static final int kShooterMotorDefaultRPM = 3600;
 
     // Shooter Motor PID
@@ -195,12 +195,12 @@ public final class Constants {
       public final int bottomSpeed;
 
       private SpeedSet(int topSpeed, int bottomSpeed) {
-          this.topSpeed = topSpeed;
-          this.bottomSpeed = bottomSpeed;
+        this.topSpeed = topSpeed;
+        this.bottomSpeed = bottomSpeed;
       }
     }
 
-    public enum ShooterState{
+    public enum ShooterState {
       kReady,
       kPreparing,
       kStop,
@@ -267,8 +267,8 @@ public final class Constants {
       public final int approachingXSpeed;
 
       private Limelight(String hostname, int approachingXSpeed) {
-          this.hostname = hostname;
-          this.approachingXSpeed = approachingXSpeed;
+        this.hostname = hostname;
+        this.approachingXSpeed = approachingXSpeed;
       }
     }
   }

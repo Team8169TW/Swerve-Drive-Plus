@@ -136,11 +136,11 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void setSpeed(int topSpeed, int bottomSpeed) {
-    if (topSpeed > ShooterConstants.kShooterMotorMaxRPM)
-      topSpeed = ShooterConstants.kShooterMotorMaxRPM;
+    if (topSpeed > ShooterConstants.kShooterMaxRPM)
+      topSpeed = ShooterConstants.kShooterMaxRPM;
     setPointTop = topSpeed;
-    if (bottomSpeed > ShooterConstants.kShooterMotorMaxRPM)
-      bottomSpeed = ShooterConstants.kShooterMotorMaxRPM;
+    if (bottomSpeed > ShooterConstants.kShooterMaxRPM)
+      bottomSpeed = ShooterConstants.kShooterMaxRPM;
     setPointBottom = bottomSpeed;
   }
 
