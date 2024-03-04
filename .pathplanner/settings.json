@@ -1,6 +1,6 @@
 {
-  "robotWidth": 0.63,
-  "robotLength": 0.63,
+  "robotWidth": 0.64,
+  "robotLength": 0.64,
   "holonomicMode": true,
   "pathFolders": [
     "Speak to ",

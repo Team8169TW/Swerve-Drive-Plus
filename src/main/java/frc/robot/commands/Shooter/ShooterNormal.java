@@ -24,11 +24,11 @@ public class ShooterNormal extends Command {
     this.shooterSubsystem = shooterSubsystem;
     this.onStop = onStop;
     this.speed = speed;
-    this.linkageSubsystem = linkageSubsystem;
+    // this.linkageSubsystem = linkageSubsystem;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooterSubsystem);
-    addRequirements(linkageSubsystem);
+    // addRequirements(linkageSubsystem);
 
     SmartDashboard.putNumber("Shooter Set RPM T",
         SmartDashboard.getNumber("Shooter Set RPM T", ShooterConstants.kShooterMotorDefaultRPM));
@@ -39,7 +39,7 @@ public class ShooterNormal extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    linkageSubsystem.setShooter();
+    // linkageSubsystem.setShooter();
     shooterSubsystem.setSpeed(speed.topSpeed, speed.bottomSpeed);
   }
 
@@ -57,12 +57,12 @@ public class ShooterNormal extends Command {
   @Override
   public void end(boolean interrupted) {
     shooterSubsystem.stop();
-    linkageSubsystem.setIdle();
+    // linkageSubsystem.setIdle();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return onStop == null ? onStop.getAsBoolean() : false;
+    return onStop != null ? onStop.getAsBoolean() : false;
   }
 }

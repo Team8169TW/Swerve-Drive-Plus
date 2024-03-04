@@ -17,17 +17,17 @@ public class IntakeAuto extends Command {
   /** Creates a new IntakeAuto. */
   public IntakeAuto(IntakeSubsystem intakeSubsystem, LinkageSubsystem linkageSubsystem) {
     this.intakeSubsystem = intakeSubsystem;
-    this.linkageSubsystem = linkageSubsystem;
+    // this.linkageSubsystem = linkageSubsystem;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intakeSubsystem);
-    addRequirements(linkageSubsystem);
+    // addRequirements(linkageSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    linkageSubsystem.setIntaker();
+    // linkageSubsystem.setIntaker();
     intakeSubsystem.runFwd();
     timer.reset();
   }
@@ -46,7 +46,7 @@ public class IntakeAuto extends Command {
   public void end(boolean interrupted) {
     timer.stop();
     intakeSubsystem.stop();
-    linkageSubsystem.setIdle();
+    // linkageSubsystem.setIdle();
   }
 
   // Returns true when the command should end.

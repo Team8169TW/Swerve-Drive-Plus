@@ -20,18 +20,18 @@ public class IntakeFromHead extends Command {
   public IntakeFromHead(IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem, LinkageSubsystem linkageSubsystem) {
     this.intakeSubsystem = intakeSubsystem;
     this.shooterSubsystem = shooterSubsystem;
-    this.linkageSubsystem = linkageSubsystem;
+    // this.linkageSubsystem = linkageSubsystem;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intakeSubsystem);
     addRequirements(shooterSubsystem);
-    addRequirements(linkageSubsystem);
+    // addRequirements(linkageSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    linkageSubsystem.setShooter();
+    // linkageSubsystem.setShooter();
     shooterSubsystem.runRev();
     timer.reset();
   }
@@ -52,7 +52,7 @@ public class IntakeFromHead extends Command {
     timer.stop();
     shooterSubsystem.stop();
     intakeSubsystem.stop();
-    linkageSubsystem.setIdle();
+    // linkageSubsystem.setIdle();
   }
 
   // Returns true when the command should end.

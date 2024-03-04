@@ -147,7 +147,7 @@ public final class Constants {
     public static final int kIntakeMotorPort = 10;
 
     // Intake Motor Rate
-    public static final double kIntakeMotorRateFwd = 0.7;
+    public static final double kIntakeMotorRateFwd = 0.4;
     public static final double kIntakeMotorRateRev = 0.5;
 
     // Intake Sensor Gate Value
@@ -171,7 +171,7 @@ public final class Constants {
     public static final double kShooterMotorGearRatio = 8.0 / 7.0;
 
     // Shooter Motor Speed
-    public static final int kShooterMaxRPM = (int) Math.floor(5600 * kShooterMotorGearRatio);
+    public static final int kShooterMaxRPM = (int) Math.floor(5700 * kShooterMotorGearRatio);
     public static final int kShooterMotorDefaultRPM = 3600;
 
     // Shooter Motor PID
@@ -230,9 +230,9 @@ public final class Constants {
     public static final double kLinkageMotorGearRatio = 100.0 / 14 * 46;
 
     // Linkage Motor Position
-    public static final double kShootPosition = 41.00;
-    public static final double kIdlePosition = 70.00;
-    public static final double kIntakePosition = 92.00;
+    public static final double kShootPosition = 258.00;
+    public static final double kIdlePosition = 290.00;
+    public static final double kIntakePosition = 312.00;
 
     // Linkage Motor Limit
     public static final double kUpLimit = kShootPosition - 1;

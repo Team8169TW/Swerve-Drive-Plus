@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.RunMode;
@@ -158,7 +160,6 @@ public class RobotContainer {
     NamedCommands.registerCommand("IntakeNormalFwd", new IntakeNormal(intakeSubsystem, RunMode.kFwd));
     NamedCommands.registerCommand("IntakeAuto", new IntakeAuto(intakeSubsystem, linkageSubsystem));
 
-    NamedCommands.registerCommand("copyHeading", swerveSubsystem.copyHeading());
     // NamedCommands.registerCommand("AutoShoot", new AutoShoot(shooterSubsystem, linkageSubsystem, intakeSubsystem));
   }
 

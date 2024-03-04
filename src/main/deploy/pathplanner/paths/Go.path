@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.1014358661307162,
-        "y": 5.5007984334432125
+        "x": 1.1009154522955886,
+        "y": 5.5
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8662040127673811,
-        "y": 6.480537525821024
+        "x": 1.8656835989322536,
+        "y": 6.4797390923778115
       },
       "isLocked": false,
       "linkedName": "SpeakC"
@@ -59,7 +59,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Speak to ",
+  "folder": null,
   "previewStartingState": {
     "rotation": 180.0,
     "velocity": 0

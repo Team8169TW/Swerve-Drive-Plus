@@ -56,12 +56,12 @@ public class SwerveSubsystem extends SubsystemBase {
   // The end of this madness ^_^
 
   // Create the navX using roboRIO expansion port
-  private AHRS gyro = new AHRS(SPI.Port.kMXP);
+  private static AHRS gyro = new AHRS(SPI.Port.kMXP);
 
   private Field2d field = new Field2d();
 
   private PIDController thetaController;
-  private double heading;
+  private static double heading;
 
   public double kP = DriveConstants.kPTheta, kI = DriveConstants.kITheta, kD = DriveConstants.kDTheta,
       kIZone = DriveConstants.kIZTheta;
@@ -152,7 +152,7 @@ public class SwerveSubsystem extends SubsystemBase {
   // }
 
   // Return gyro heading, make sure to read navx docs on this
-  public double getHeading() {
+  public static double getHeading() {
     return gyro.getAngle();
   }
 
@@ -318,8 +318,8 @@ public class SwerveSubsystem extends SubsystemBase {
   // return (57.0 * 9.8 * gyro.getRawAccelX());
   // }
 
-  public Command copyHeading() {
-    return this.runOnce(() -> heading = getHeading());
+  public static void copyHeading(){
+    heading = getHeading();
   }
 
   // Periodic looooooop

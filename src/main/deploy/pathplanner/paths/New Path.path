@@ -78,7 +78,7 @@
     },
     {
       "waypointRelativePos": 0.7,
-      "rotationDegrees": 153.71524081411084,
+      "rotationDegrees": 150.80318128977476,
       "rotateFast": false
     },
     {
@@ -93,12 +93,37 @@
     },
     {
       "waypointRelativePos": 1.4,
-      "rotationDegrees": 108.80076092630974,
+      "rotationDegrees": -60.130108242770085,
       "rotateFast": false
     },
     {
       "waypointRelativePos": 1.6,
-      "rotationDegrees": 156.66826431873233,
+      "rotationDegrees": -0.843901037968041,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.85,
+      "rotationDegrees": 79.9428318866404,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 2.0999999999999996,
+      "rotationDegrees": 156.9053885872713,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 2.45,
+      "rotationDegrees": -148.66120106798354,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 2.7,
+      "rotationDegrees": -63.59731025377708,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 2.8499999999999996,
+      "rotationDegrees": 0,
       "rotateFast": false
     }
   ],
@@ -107,8 +132,8 @@
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 5.0,
-    "maxAngularVelocity": 999909.0,
-    "maxAngularAcceleration": 99999.0
+    "maxAngularVelocity": 720.0,
+    "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
@@ -116,7 +141,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Speak to ",
+  "folder": null,
   "previewStartingState": {
     "rotation": -120.0,
     "velocity": 0
