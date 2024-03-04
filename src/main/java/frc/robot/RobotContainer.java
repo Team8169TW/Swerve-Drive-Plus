@@ -9,18 +9,14 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.RunMode;
 import frc.robot.Constants.LimelightConstants.Limelight;
 import frc.robot.Constants.ShooterConstants.SpeedSet;
-import frc.robot.commands.Auto.AutoShoot;
 import frc.robot.commands.Intake.IntakeAuto;
 import frc.robot.commands.Intake.IntakeFromHead;
 import frc.robot.commands.Intake.IntakeNormal;
@@ -114,14 +110,14 @@ public class RobotContainer {
     // Swerve Brake
     driverController.x().whileTrue(new SwerveXMode(swerveSubsystem));
     // Swerve Lock Heading Noto
-    driverController.rightBumper().toggleOnTrue(new SwerveLockHeading(swerveSubsystem,
+    driverController.rightBumper().whileTrue(new SwerveLockHeading(swerveSubsystem,
         () -> -driverController.getLeftY(), // X-Axis
         () -> -driverController.getLeftX(), // Y-Axis
         () -> -driverController.getRightX(), // R-Axis
         Limelight.kInatke
     ));
     // Swerve Lock Heading AprilTag
-    driverController.leftBumper().toggleOnTrue(new SwerveLockHeading(swerveSubsystem,
+    driverController.leftBumper().whileTrue(new SwerveLockHeading(swerveSubsystem,
         () -> -driverController.getLeftY(), // X-Axis
         () -> -driverController.getLeftX(), // Y-Axis
         () -> -driverController.getRightX(), // R-Axis
