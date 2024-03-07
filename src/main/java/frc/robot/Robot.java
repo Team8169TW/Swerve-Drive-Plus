@@ -106,6 +106,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     SwerveSubsystem.copyHeading();
+    System.out.println("teleopInit: " + SwerveSubsystem.heading);
   }
 
   /** This function is called periodically during operator control. */

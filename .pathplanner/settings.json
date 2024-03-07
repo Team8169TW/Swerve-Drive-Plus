@@ -3,10 +3,15 @@
   "robotLength": 0.64,
   "holonomicMode": true,
   "pathFolders": [
+    "N1~N3",
     "Speak to ",
     "Start"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "1 note",
+    "2 Note",
+    "just running"
+  ],
   "defaultMaxVel": 5.0,
   "defaultMaxAccel": 5.0,
   "defaultMaxAngVel": 720.0,

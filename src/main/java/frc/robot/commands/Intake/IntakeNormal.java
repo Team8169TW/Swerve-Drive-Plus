@@ -7,6 +7,7 @@ package frc.robot.commands.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.RunMode;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.StatusSubsystem;
 
 public class IntakeNormal extends Command {
 private IntakeSubsystem intakeSubsystem;
@@ -24,10 +25,13 @@ private RunMode mode;
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(mode == RunMode.kFwd)
+    if(mode == RunMode.kFwd){
       intakeSubsystem.runFwd();
-    if(mode == RunMode.kRev)
+      StatusSubsystem.setNotePassed(false);
+    }
+    if(mode == RunMode.kRev){
       intakeSubsystem.runRev();
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.

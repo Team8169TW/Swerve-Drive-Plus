@@ -60,7 +60,7 @@ public class SwerveSubsystem extends SubsystemBase {
   private Field2d field = new Field2d();
 
   private PIDController thetaController;
-  private static double heading;
+  public static double heading;
 
   public double kP = DriveConstants.kPTheta, kI = DriveConstants.kITheta, kD = DriveConstants.kDTheta,
       kIZone = DriveConstants.kIZTheta;
@@ -213,6 +213,8 @@ public class SwerveSubsystem extends SubsystemBase {
       heading -= turningAngle;
     }
 
+    // System.out.println(getHeading() +" "+heading);
+
     double turningSpeed = thetaController.calculate(getHeading(), heading);
     turningSpeed = Math.abs(turningSpeed) > 0.05 ? turningSpeed : 0.0;
     turningSpeed *= -DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
@@ -328,7 +330,7 @@ public class SwerveSubsystem extends SubsystemBase {
     // Update odometer for it to caculate robot position
     odometer.update(getOdometryAngle(), getModulePositions());
 
-    field.setRobotPose(getPose());
+    // field.setRobotPose(getPose());
 
     // Put odometry data on smartdashboard
     SmartDashboard.putNumber("Heading", getHeading());

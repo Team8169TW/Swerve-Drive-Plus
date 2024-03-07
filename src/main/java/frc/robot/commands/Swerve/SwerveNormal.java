@@ -61,7 +61,7 @@ public class SwerveNormal extends Command {
     // by max speed
     xSpeed = xLimiter.calculate(xSpeed);
     ySpeed = yLimiter.calculate(ySpeed);
-    turningAngle = turningLimiter.calculate(turningAngle);
+    // turningAngle = turningLimiter.calculate(turningAngle);
 
     turningAngle *= 5;
 

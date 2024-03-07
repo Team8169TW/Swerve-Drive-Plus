@@ -24,12 +24,12 @@ public class AutoShoot extends ParallelDeadlineGroup {
   public AutoShoot(
       ShooterSubsystem shooterSubsystem,
       LinkageSubsystem linkageSubsystem,
-      IntakeSubsystem intakeSubsystem) {
+      IntakeSubsystem intakeSubsystem, SpeedSet speed) {
     // Add the deadline command in the super() call. Add other commands using
     // addCommands().
-    super(new WaitCommand(2));
+    super(new WaitCommand(1.2));
     addCommands(
-        new ShooterNormal(shooterSubsystem, linkageSubsystem, null, SpeedSet.kSpeak),
+        new ShooterNormal(shooterSubsystem, linkageSubsystem, null, speed),
         new SequentialCommandGroup(
             new WaitCommand(1),
             new IntakeNormal(intakeSubsystem, RunMode.kFwd)));

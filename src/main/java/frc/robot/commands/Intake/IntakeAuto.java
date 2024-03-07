@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LinkageSubsystem;
+import frc.robot.subsystems.StatusSubsystem;
 
 public class IntakeAuto extends Command {
   private IntakeSubsystem intakeSubsystem;
@@ -38,6 +39,7 @@ public class IntakeAuto extends Command {
     if(intakeSubsystem.isPass() && timer.get()==0){
       timer.start();
       intakeSubsystem.runRev();
+      StatusSubsystem.setNotePassed(true);
     }
   }
 

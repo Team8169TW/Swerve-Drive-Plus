@@ -189,7 +189,9 @@ public final class Constants {
       kSpeak(3600, 4400),
       kAmp(800, 850),
       kStage(875, 3795),
-      kManual(3600, 3600);
+      kManual(5000, 2400),
+      kSpeak1m(5000, 2500),
+      kSpeak2m(5000, 2200);
 
       public final int topSpeed;
       public final int bottomSpeed;
@@ -220,8 +222,8 @@ public final class Constants {
     public static final double kD = 0.00001; // 0.005
     public static final double kIz = 0; // 20
     public static final double kFF = 0;
-    public static final double kMaxOutput = 0.4;
-    public static final double kMinOutput = -0.5;
+    public static final double kMaxOutput = 0.8;
+    public static final double kMinOutput = -1;
 
     // Linkage Motor Rate
     public static final double kLinkageMotorRateFine = 0.4;
@@ -230,9 +232,9 @@ public final class Constants {
     public static final double kLinkageMotorGearRatio = 100.0 / 14 * 46;
 
     // Linkage Motor Position
-    public static final double kShootPosition = 258.00;
-    public static final double kIdlePosition = 290.00;
-    public static final double kIntakePosition = 312.00;
+    public static final double kShootPosition = 234.00;
+    public static final double kIdlePosition = 264.00;
+    public static final double kIntakePosition = 288.50;
 
     // Linkage Motor Limit
     public static final double kUpLimit = kShootPosition - 1;

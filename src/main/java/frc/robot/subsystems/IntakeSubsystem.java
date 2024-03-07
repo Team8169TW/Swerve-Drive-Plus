@@ -88,10 +88,10 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Intake Proximity", getProximity());
-    SmartDashboard.putBoolean("Intake isPass", isPass());
-    SmartDashboard.putBoolean("Intake isConnected", colorSensor.isConnected());
-    SmartDashboard.putNumber("Intake C", intakeMotor.getOutputCurrent());
+    // SmartDashboard.putNumber("Intake Proximity", getProximity());
+    // SmartDashboard.putBoolean("Intake isPass", isPass());
+    // SmartDashboard.putBoolean("Intake isConnected", colorSensor.isConnected());
+    // SmartDashboard.putNumber("Intake C", intakeMotor.getOutputCurrent());
 
     if (intakeMotor.getAppliedOutput() == 0) {
       StatusSubsystem.setIntake(IntakeState.kStop);

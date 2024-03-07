@@ -17,7 +17,9 @@ import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.RunMode;
 import frc.robot.Constants.LimelightConstants.Limelight;
 import frc.robot.Constants.ShooterConstants.SpeedSet;
+import frc.robot.commands.Auto.AutoShoot;
 import frc.robot.commands.Intake.IntakeAuto;
+import frc.robot.commands.Intake.IntakeFeed;
 import frc.robot.commands.Intake.IntakeFromHead;
 import frc.robot.commands.Intake.IntakeNormal;
 import frc.robot.commands.Linkage.LinkageAuto;
@@ -100,12 +102,22 @@ public class RobotContainer {
         new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getLeftBumper, SpeedSet.kManual));
 
     // Linkage fine
-    driverController.y().whileTrue(new LinkageNormal(linkageSubsystem, RunMode.kUp));
-    driverController.a().whileTrue(new LinkageNormal(linkageSubsystem, RunMode.kDown));
+    // driverController.y().whileTrue(new LinkageNormal(linkageSubsystem,
+    // RunMode.kUp));
+    // driverController.a().whileTrue(new LinkageNormal(linkageSubsystem,
+    // RunMode.kDown));
+    driverController.pov(0).whileTrue(new LinkageNormal(linkageSubsystem, RunMode.kUp));
+    driverController.pov(180).whileTrue(new LinkageNormal(linkageSubsystem, RunMode.kDown));
     // Linkage auto
-    driverController.pov(0).onTrue(new LinkageAuto(linkageSubsystem, RunMode.kShoot));
-    driverController.pov(90).onTrue(new LinkageAuto(linkageSubsystem, RunMode.kIdle));
-    driverController.pov(180).onTrue(new LinkageAuto(linkageSubsystem, RunMode.kIntake));
+    // driverController.pov(0).onTrue(new LinkageAuto(linkageSubsystem,
+    // RunMode.kShoot));
+    // driverController.pov(90).onTrue(new LinkageAuto(linkageSubsystem,
+    // RunMode.kIdle));
+    // driverController.pov(180).onTrue(new LinkageAuto(linkageSubsystem,
+    // RunMode.kIntake));
+    driverController.y().onTrue(new LinkageAuto(linkageSubsystem, RunMode.kShoot));
+    driverController.b().onTrue(new LinkageAuto(linkageSubsystem, RunMode.kIdle));
+    driverController.a().onTrue(new LinkageAuto(linkageSubsystem, RunMode.kIntake));
 
     // Swerve Brake
     driverController.x().whileTrue(new SwerveXMode(swerveSubsystem));
@@ -114,15 +126,13 @@ public class RobotContainer {
         () -> -driverController.getLeftY(), // X-Axis
         () -> -driverController.getLeftX(), // Y-Axis
         () -> -driverController.getRightX(), // R-Axis
-        Limelight.kInatke
-    ));
+        Limelight.kInatke));
     // Swerve Lock Heading AprilTag
     driverController.leftBumper().whileTrue(new SwerveLockHeading(swerveSubsystem,
         () -> -driverController.getLeftY(), // X-Axis
         () -> -driverController.getLeftX(), // Y-Axis
         () -> -driverController.getRightX(), // R-Axis
-        Limelight.kShooter
-    ));
+        Limelight.kShooter));
     // Swerve Auto approaching Note
     driverController.axisGreaterThan(XboxController.Axis.kRightTrigger.value, 0.1)
         .whileTrue(new SwerveAutoGo(swerveSubsystem, Limelight.kInatke, driverController::getRightTriggerAxis));
@@ -130,13 +140,22 @@ public class RobotContainer {
     driverController.axisGreaterThan(XboxController.Axis.kLeftTrigger.value, 0.1)
         .whileTrue(new SwerveAutoGo(swerveSubsystem, Limelight.kShooter, driverController::getLeftTriggerAxis));
     // Swerve Auto Go
-    // driverController.y().onTrue(new AutoIntakeNote(swerveSubsystem, intakeSubsystem, linkageSubsystem));
+    // driverController.y().onTrue(new AutoIntakeNote(swerveSubsystem,
+    // intakeSubsystem, linkageSubsystem));
 
     // Disable
     // operatorController.leftBumper().onTrue(new
     // InstantCommand(()->{System.out.println(0/0);}));
 
-    // Shuffleboard.getTab("test").add(new AutoShoot(shooterSubsystem, linkageSubsystem, intakeSubsystem));
+    // for TEST Only
+    // Shuffleboard.getTab("test").add(new AutoShoot(shooterSubsystem,
+    // linkageSubsystem, intakeSubsystem));
+    // operatorController.leftBumper()
+    //     .onTrue(new AutoShoot(shooterSubsystem, linkageSubsystem, intakeSubsystem, SpeedSet.kSpeak));
+    // operatorController.rightBumper()
+    //     .onTrue(new AutoShoot(shooterSubsystem, linkageSubsystem, intakeSubsystem, SpeedSet.kSpeak1m));
+    // operatorController.start()
+    //     .onTrue(new IntakeFeed(intakeSubsystem));
   }
 
   private void setDefaultCommand() {
@@ -152,11 +171,22 @@ public class RobotContainer {
 
   private void configureNamedCommands() {
     NamedCommands.registerCommand("ShooterNormalSpeak",
-        new ShooterNormal(shooterSubsystem, linkageSubsystem, operatorControllerNC::getBackButton, SpeedSet.kSpeak));
+        new ShooterNormal(shooterSubsystem, linkageSubsystem, null, SpeedSet.kSpeak));
+    NamedCommands.registerCommand("ShooterSpeak1m",
+        new ShooterNormal(shooterSubsystem, linkageSubsystem, null, SpeedSet.kSpeak1m));
+
     NamedCommands.registerCommand("IntakeNormalFwd", new IntakeNormal(intakeSubsystem, RunMode.kFwd));
     NamedCommands.registerCommand("IntakeAuto", new IntakeAuto(intakeSubsystem, linkageSubsystem));
+    NamedCommands.registerCommand("IntakeFeed", new IntakeFeed(intakeSubsystem));
 
-    // NamedCommands.registerCommand("AutoShoot", new AutoShoot(shooterSubsystem, linkageSubsystem, intakeSubsystem));
+    NamedCommands.registerCommand("AutoShoot",
+        new AutoShoot(shooterSubsystem, linkageSubsystem, intakeSubsystem, SpeedSet.kSpeak));
+    NamedCommands.registerCommand("AutoShoot1m",
+        new AutoShoot(shooterSubsystem, linkageSubsystem, intakeSubsystem, SpeedSet.kSpeak1m));
+
+    NamedCommands.registerCommand("LinkageShoot", new LinkageAuto(linkageSubsystem, RunMode.kShoot));
+    NamedCommands.registerCommand("LinkageIdle", new LinkageAuto(linkageSubsystem, RunMode.kIdle));
+    NamedCommands.registerCommand("LinkageIntake", new LinkageAuto(linkageSubsystem, RunMode.kIntake));
   }
 
   /**

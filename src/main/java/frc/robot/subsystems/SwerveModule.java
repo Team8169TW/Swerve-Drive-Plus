@@ -97,8 +97,8 @@ public class SwerveModule extends SubsystemBase {
     driveMotor.setIdleMode(IdleMode.kBrake);
     turningMotor.setIdleMode(IdleMode.kBrake);
 
-    driveMotor.setSmartCurrentLimit(40);
-    turningMotor.setSmartCurrentLimit(20);
+    driveMotor.setSmartCurrentLimit(60);
+    turningMotor.setSmartCurrentLimit(40);
 
     // Call resetEncoders
     resetEncoders();
@@ -134,6 +134,7 @@ public class SwerveModule extends SubsystemBase {
 
   public void update() {
     // SmartDashboard.putNumber(moduleName + "Absolute-Position", getAbsoluteEncoderRad());
+    // SmartDashboard.putNumber(moduleName+" speed", driveEncoder.getVelocity());
   }
 
   // Helpful get methods
@@ -196,14 +197,14 @@ public class SwerveModule extends SubsystemBase {
     // Use PID to calculate angle setpoint
     builtinTurningPidController.setReference(state.angle.getRadians(), ControlType.kPosition);
 
-    simTurnCmd.setAngle(state.angle); // .plus(Rotation2d.fromDegrees(90))
-    simDirectionCmd.setAngle(state.speedMetersPerSecond > 0 ? 0 : 180);
-    simDirectionCmd.setLength(Math.abs(state.speedMetersPerSecond / DriveConstants.kPhysicalMaxSpeedMetersPerSecond));
+    // simTurnCmd.setAngle(state.angle); // .plus(Rotation2d.fromDegrees(90))
+    // simDirectionCmd.setAngle(state.speedMetersPerSecond > 0 ? 0 : 180);
+    // simDirectionCmd.setLength(Math.abs(state.speedMetersPerSecond / DriveConstants.kPhysicalMaxSpeedMetersPerSecond));
 
-    simTurnReal.setAngle(absoluteEncoder.getAbsolutePosition().getValue() * 360); // +90
-    simDirectionReal
-        .setAngle(getDriveVelocity() > 0 ? 0 : 180);
-    simDirectionReal.setLength(Math.abs(getDriveVelocity() / DriveConstants.kPhysicalMaxSpeedMetersPerSecond));
+    // simTurnReal.setAngle(absoluteEncoder.getAbsolutePosition().getValue() * 360); // +90
+    // simDirectionReal
+    //     .setAngle(getDriveVelocity() > 0 ? 0 : 180);
+    // simDirectionReal.setLength(Math.abs(getDriveVelocity() / DriveConstants.kPhysicalMaxSpeedMetersPerSecond));
 
     SmartDashboard.putString("Swerve[" + moduleName + "] state", state.toString());
   }
