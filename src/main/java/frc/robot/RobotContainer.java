@@ -152,10 +152,10 @@ public class RobotContainer {
     // linkageSubsystem, intakeSubsystem));
     // operatorController.leftBumper()
     //     .onTrue(new AutoShoot(shooterSubsystem, linkageSubsystem, intakeSubsystem, SpeedSet.kSpeak));
-    // operatorController.rightBumper()
-    //     .onTrue(new AutoShoot(shooterSubsystem, linkageSubsystem, intakeSubsystem, SpeedSet.kSpeak1m));
-    // operatorController.start()
-    //     .onTrue(new IntakeFeed(intakeSubsystem));
+    operatorController.rightBumper()
+        .onTrue(new AutoShoot(shooterSubsystem, linkageSubsystem, intakeSubsystem, SpeedSet.kSpeak1m));
+    operatorController.start()
+        .onTrue(new IntakeFeed(intakeSubsystem));
   }
 
   private void setDefaultCommand() {

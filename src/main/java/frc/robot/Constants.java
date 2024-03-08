@@ -48,7 +48,7 @@ public final class Constants {
   public static final class ModuleConstants {
 
     public static final double kWheelDiameterMeters = Units.inchesToMeters(4);
-    public static final double kDriveMotorGearRatio = 1.0 / 6.75;
+    public static final double kDriveMotorGearRatio = 1.0 / 6.12;
     public static final double kTurningMotorGearRatio = 1 / (150 / 7.0);
     public static final double kDriveEncoderRot2Meter = kDriveMotorGearRatio * Math.PI * kWheelDiameterMeters;
     public static final double kTurningEncoderRot2Rad = kTurningMotorGearRatio * 2 * Math.PI;
@@ -117,8 +117,8 @@ public final class Constants {
     public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 8;
     public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 2;
 
-    public static final double kPTheta = 0.012;
-    public static final double kITheta = 0.01;
+    public static final double kPTheta = 0.0115;
+    public static final double kITheta = 0.005;
     public static final double kDTheta = 0.0001;
     public static final double kIZTheta = 40.0;
 
@@ -147,7 +147,7 @@ public final class Constants {
     public static final int kIntakeMotorPort = 10;
 
     // Intake Motor Rate
-    public static final double kIntakeMotorRateFwd = 0.4;
+    public static final double kIntakeMotorRateFwd = 0.5;
     public static final double kIntakeMotorRateRev = 0.5;
 
     // Intake Sensor Gate Value
@@ -186,11 +186,11 @@ public final class Constants {
     public static final double kShooterMotorRateRev = 0.15;
 
     public enum SpeedSet {
-      kSpeak(3600, 4400),
+      kSpeak(3600, 4600),
       kAmp(800, 850),
       kStage(875, 3795),
-      kManual(5000, 2400),
-      kSpeak1m(5000, 2500),
+      kManual(5000, 3200),
+      kSpeak1m(5000, 3300),
       kSpeak2m(5000, 2200);
 
       public final int topSpeed;

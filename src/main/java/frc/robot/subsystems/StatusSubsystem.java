@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Timer;
-
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -35,6 +33,7 @@ public class StatusSubsystem extends SubsystemBase {
   private AddressableLEDBuffer m_ledBuffer;
   private int m_rainbowFirstPixelHue = 0;
   private int ffc = 0;
+  private boolean ff = false;
 
   /** Creates a new StatusSubsystem. */
   public StatusSubsystem() {
@@ -45,36 +44,26 @@ public class StatusSubsystem extends SubsystemBase {
     // Reuse buffer
     // Default to a length of 60, start empty output
     // Length is expensive to set, so only set it once, then just update data
-    m_ledBuffer = new AddressableLEDBuffer(160);
+    m_ledBuffer = new AddressableLEDBuffer(270);
     m_led.setLength(m_ledBuffer.getLength());
 
     // Set the data
     m_led.setData(m_ledBuffer);
     m_led.start();
+
+    SmartDashboard.putNumber("color h", 0);
+    SmartDashboard.putNumber("color s", 0);
+    SmartDashboard.putNumber("color v", 0);
   }
 
   // LED Addr:
-  //    Back R: 0~16
+  // Back R: 0~16
   // Linkage R: 17~44
   // Shooter R: 45~60
   // Shooter L: 61~77
   // Linkage L: 78~105
-  //    Back L: 106~122
-
-  private void rainbow() {
-    // For every pixel
-    for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-      // Calculate the hue - hue is easier for rainbows because the color
-      // shape is a circle so only one value needs to precess
-      final var hue = (m_rainbowFirstPixelHue + (i * 180 / m_ledBuffer.getLength())) % 180;
-      // Set the value
-      m_ledBuffer.setHSV(i, hue, 255, 64);
-    }
-    // Increase by to make the rainbow "move"
-    m_rainbowFirstPixelHue += 3;
-    // Check bounds
-    m_rainbowFirstPixelHue %= 180;
-  }
+  // Back L: 106~122
+  // Drive: 123~266
 
   private void setLedAll(int hue) {
     // For every pixel
@@ -104,25 +93,62 @@ public class StatusSubsystem extends SubsystemBase {
   private void ledByShooterState() {
     if (shooterStateT == ShooterState.kStop && shooterStateB == ShooterState.kStop) {
       setLedLinkage(90); // cyan
-      ffc = 0;
     } else if (shooterStateT == ShooterState.kPreparing || shooterStateB == ShooterState.kPreparing) {
-      if (ffc % 16 > 8) {
+      if (ff) {
         setLedLinkage(0); // red
       } else {
         setLedLinkage(60); // green
       }
-      ffc++;
     } else {
       setLedLinkage(60); // green
     }
   }
 
-  private void ledByNoteState(){
-    if(intakeNotePassed){
-      setLedBack(20); // orange
-    }else{
+  private void ledByIntakeState() {
+    if (intakeNotePassed) {
+      setLedBack(5); // orange
+    } else if (intakeState == IntakeState.kRunning) {
+      setLedBack(60); // green
+    }else if(intakeState == IntakeState.kBlocked){
+      if (ff) {
+        setLedBack(0); // red
+      } else {
+        setLedBack(60); // green
+      }
+    } else {
       setLedBack(90); // cyan
     }
+  }
+
+  private void ledAllByManual() {
+    int h = (int) SmartDashboard.getNumber("color h", 0);
+    int s = (int) SmartDashboard.getNumber("color s", 0);
+    int v = (int) SmartDashboard.getNumber("color v", 0);
+    for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+      m_ledBuffer.setHSV(i, h, s, v);
+    }
+  }
+
+  private void setLedDrive(int h, int s, int v) {
+    // For every pixel
+    for (var i = 122; i <= 266; i++) {
+      m_ledBuffer.setHSV(i, h, s, v);
+    }
+  }
+
+  private void driveRainbow() {
+    // For every pixel
+    for (var i = 122; i <= 266; i++) {
+      // Calculate the hue - hue is easier for rainbows because the color
+      // shape is a circle so only one value needs to precess
+      final var hue = (m_rainbowFirstPixelHue + (i * 180 / 144)) % 180;
+      // Set the value\
+      m_ledBuffer.setHSV(i, hue, 255, 128);
+    }
+    // Increase by to make the rainbow "move"
+    m_rainbowFirstPixelHue += 3;
+    // Check bounds
+    m_rainbowFirstPixelHue %= 180;
   }
 
   @Override
@@ -130,7 +156,10 @@ public class StatusSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
 
     ledByShooterState();
-    ledByNoteState();
+    ledByIntakeState();
+    driveRainbow();
+    // ledAllByManual();
+    setLedDrive(0, 0, 128);
     m_led.setData(m_ledBuffer);
 
     if (swerveAutoByIntake) {
@@ -179,6 +208,13 @@ public class StatusSubsystem extends SubsystemBase {
       linkageStateSig = !linkageStateSig;
     }
     SmartDashboard.putBoolean("Linkage state", linkageStateSig);
+
+    if (ffc % 16 > 8) {
+      ff = true;
+    } else {
+      ff = false;
+    }
+    ffc++;
   }
 
   public static void setSwerveAuto(boolean on, Limelight by) {
@@ -205,7 +241,7 @@ public class StatusSubsystem extends SubsystemBase {
     linkageState = state;
   }
 
-  public static void setNotePassed(boolean passed){
+  public static void setNotePassed(boolean passed) {
     intakeNotePassed = passed;
   }
 }
