@@ -109,7 +109,7 @@ public final class Constants {
     // public static final double kBackRightDriveAbsoluteEncoderOffsetDeg =
     // -0.241943;
 
-    public static final double kPhysicalMaxSpeedMetersPerSecond = 5;
+    public static final double kPhysicalMaxSpeedMetersPerSecond = 5.5;
     public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * Math.PI;
 
     public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond;

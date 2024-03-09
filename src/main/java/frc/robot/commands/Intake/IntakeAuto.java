@@ -14,6 +14,7 @@ public class IntakeAuto extends Command {
   private IntakeSubsystem intakeSubsystem;
   private LinkageSubsystem linkageSubsystem;
   Timer timer = new Timer();
+  private boolean passsed = false;
 
   /** Creates a new IntakeAuto. */
   public IntakeAuto(IntakeSubsystem intakeSubsystem, LinkageSubsystem linkageSubsystem) {
@@ -31,15 +32,17 @@ public class IntakeAuto extends Command {
     // linkageSubsystem.setIntaker();
     intakeSubsystem.runFwd();
     timer.reset();
+    passsed = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(intakeSubsystem.isPass() && timer.get()==0){
+    if(!passsed && intakeSubsystem.isPass() && timer.get()==0){
       timer.start();
       intakeSubsystem.runRev();
       StatusSubsystem.setNotePassed(true);
+      passsed = true;
     }
   }
 

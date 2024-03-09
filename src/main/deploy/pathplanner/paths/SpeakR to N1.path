@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7,
-        "y": 6.5
+        "x": 0.9,
+        "y": 6.45
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6177659742556163,
-        "y": 6.701473214749404
+        "x": 1.8177659742556163,
+        "y": 6.651473214749404
       },
       "isLocked": false,
       "linkedName": "SpaekR"
     },
     {
       "anchor": {
-        "x": 2.75,
-        "y": 6.905
+        "x": 2.7,
+        "y": 6.95
       },
       "prevControl": {
-        "x": 2.0729681926526187,
-        "y": 6.713278386445249
+        "x": 2.022968192652624,
+        "y": 6.758278386445249
       },
       "nextControl": null,
       "isLocked": false,
@@ -38,8 +38,8 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.0,
-    "maxAcceleration": 5.0,
+    "maxVelocity": 5.5,
+    "maxAcceleration": 5.5,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0
   },
