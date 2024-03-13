@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.9,
-        "y": 6.45
+        "x": 1.15,
+        "y": 6.5
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8177659742556163,
-        "y": 6.651473214749404
+        "x": 1.8534738897234921,
+        "y": 6.683138635019525
       },
       "isLocked": false,
       "linkedName": "SpaekR"
@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 2.7,
-        "y": 6.95
+        "y": 6.85
       },
       "prevControl": {
-        "x": 2.022968192652624,
-        "y": 6.758278386445249
+        "x": 2.0664032119576015,
+        "y": 6.6868215636988895
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,8 +30,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.4,
-      "rotationDegrees": -160.0,
+      "waypointRelativePos": 0.3,
+      "rotationDegrees": -150.0,
       "rotateFast": false
     }
   ],
