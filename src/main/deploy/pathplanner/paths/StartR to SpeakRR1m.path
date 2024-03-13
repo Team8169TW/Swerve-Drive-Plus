@@ -1,0 +1,58 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.4,
+        "y": 6.9
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 0.8128463786357562,
+        "y": 7.036179614397644
+      },
+      "isLocked": false,
+      "linkedName": "WallSpeakR"
+    },
+    {
+      "anchor": {
+        "x": 1.5,
+        "y": 7.25
+      },
+      "prevControl": {
+        "x": 1.1415077314355373,
+        "y": 7.102717056653445
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "SpeakRR1m"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7,
+      "rotationDegrees": -125.0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 5.5,
+    "maxAngularVelocity": 720.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": -125.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Start",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

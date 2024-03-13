@@ -1,0 +1,111 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.4,
+      "y": 6.9
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartR to SpeakR"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "LinkageShoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShoot1m"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "LinkageIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "0.5"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeAuto"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "SpeakR to N1"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "N1 to SpeakR1m"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShoot1m"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeAuto"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "SpeakR1m to N4"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "N4 to SpeakC1m"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShoot1m"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "3 Note",
+  "choreoAuto": false
+}

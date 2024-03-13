@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.4,
+      "y": 4.25
+    },
+    "rotation": 0.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartL to SpeakL"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "LinkageShoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.2
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShoot"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "1 Note",
+  "choreoAuto": false
+}

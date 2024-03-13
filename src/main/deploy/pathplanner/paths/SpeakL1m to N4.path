@@ -1,0 +1,70 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.2,
+        "y": 4.8
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.379962963767316,
+        "y": 5.761685892175998
+      },
+      "isLocked": false,
+      "linkedName": "SpeakL1m"
+    },
+    {
+      "anchor": {
+        "x": 8.3,
+        "y": 7.4
+      },
+      "prevControl": {
+        "x": 6.8453234281003885,
+        "y": 6.780976196029221
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "N4"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.0,
+      "rotationDegrees": -150.0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "New Constraints Zone",
+      "minWaypointRelativePos": 0.7,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 3.0,
+        "maxAcceleration": 5.5,
+        "maxAngularVelocity": 720.0,
+        "maxAngularAcceleration": 720.0
+      }
+    }
+  ],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 5.5,
+    "maxAngularVelocity": 720.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -160.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Speak to ",
+  "previewStartingState": {
+    "rotation": 160.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
