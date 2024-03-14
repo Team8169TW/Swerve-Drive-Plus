@@ -61,7 +61,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Speak to ",
+  "folder": "Speak ",
   "previewStartingState": {
     "rotation": 120.0,
     "velocity": 0

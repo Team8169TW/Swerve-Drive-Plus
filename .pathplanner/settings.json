@@ -4,7 +4,9 @@
   "holonomicMode": true,
   "pathFolders": [
     "N1~N3",
-    "Speak to ",
+    "N4~N8",
+    "Speak1m",
+    "Speak ",
     "Start"
   ],
   "autoFolders": [
